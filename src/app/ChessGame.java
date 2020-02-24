@@ -1,4 +1,5 @@
-//import Window;
+package app;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,7 +12,7 @@ class MyCanvas extends JComponent {
   public void paint(Graphics g){
     Graphics2D g2 = (Graphics2D) g;
 
-    Image img1 = Toolkit.getDefaultToolkit().getImage("./Resources/Rook.png");
+    Image img1 = Toolkit.getDefaultToolkit().getImage("resources/Rook.png");
     g2.drawImage(img1, 10, 10, this);
     g2.finalize();
   }
@@ -19,18 +20,13 @@ class MyCanvas extends JComponent {
 
 public class ChessGame
 {
-    public static void main(String args[])
+    JFrame window;
+    public ChessGame()
     {
-        JFrame window = new JFrame();
+        this.window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setBounds(30, 30, 300, 300);
         window.getContentPane().add(new MyCanvas());
         window.setVisible(true);
-        //startGame();
-    }
-
-    private static void startGame()
-    {
-        Window window = new Window(1000, 1000);
     }
 }
