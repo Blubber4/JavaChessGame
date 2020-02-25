@@ -21,14 +21,14 @@ public class ChessGame
   {
     this.gamePanel = new GamePanel();
     initPieces();
-    initWindow(500, 500);
+    initWindow(600, 600);
   }
 
 /* this needs to be called before initWindow() */
   private void initPieces()
   {
     gamePanel.add(new Rook());
-    gamePanel.add(new Rook(300, 300));
+    gamePanel.add(new Rook(300, 0));
   }
 
   private void initWindow(int width, int height)
