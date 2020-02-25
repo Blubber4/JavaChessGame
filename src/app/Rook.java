@@ -4,8 +4,14 @@ import java.awt.Graphics;
 
 public class Rook extends ChessPiece
 {
-  public Rook(String image_filename)
+  public Rook()
   {
-    super(image_filename);
+    super("Rook.png");
+  }
+
+  public Rook(int x, int y)
+  {
+    super("Rook.png");
+    setPosition(x, y);
   }
 }

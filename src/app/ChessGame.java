@@ -1,26 +1,14 @@
 package app;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Graphics;
-import java.awt.Image;
 
 // Rook extends ChessPiece extends GameObject
-
+// board should also extend GameObject
 public class ChessGame
 {
   private JFrame window;
-  private JPanel pane;
-  private Rook rook;
   private State state;
-  List<GameObject> gameObjects = new ArrayList<GameObject>();
+  private GamePanel gamePanel;
 
   public enum State {
     EXITING,
@@ -30,10 +18,16 @@ public class ChessGame
 
   public ChessGame()
   {
+    this.gamePanel = new GamePanel();
     initPieces();
-    initPane();
     initWindow(500, 500);
-    //initTimer();
+  }
+
+/* this needs to be called before initWindow() */
+  private void initPieces()
+  {
+    gamePanel.add(new Rook());
+    gamePanel.add(new Rook(300, 300));
   }
 
   private void initWindow(int width, int height)
@@ -41,68 +35,19 @@ public class ChessGame
     this.window = new JFrame("Chess Game");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setSize(width, height);
-    window.add(pane);
-    window.setContentPane(pane);
+    window.add(gamePanel);
+    window.setContentPane(gamePanel);
     window.pack();
     window.setVisible(true);
   }
 
-  private void initPane()
-  {
-    this.pane = new JPanel()
-    {
-      @Override
-      protected void paintComponent(Graphics g)
-      {
-        super.paintComponent(g);
-        Image image = rook.getImage();
-        g.drawImage(image, rook.getPosX(), rook.getPosY(), null); // rook hard coded for now, draw from list of gameobjects later
-      }
-    };
-  }
-
-  /* private void initTimer()
-  {
-    this.timer = new Timer(400, new ActionListener()
-    {
-      @Override
-      public void actionPerformed(ActionEvent e)
-      {
-          repaint();
-      }
-    });
-    timer.start();
-  } */
-
-  /* @Override
-  protected void paintComponent(Graphics g)
-  {
-    super.paintComponent(g);
-    for (GameObject gameObject : this.gameObjects)
-    {
-      g.drawImage(gameObject.getImage(), gameObject.getPositionX(), gameObject.getPositionY(), null);
-    }
-  } */
-
-  private void initPieces()
-  {
-    this.rook = new Rook("Rook.png");
-    rook.start();
-  }
-
   public void gameLoop()
   {
-    for (GameObject gameObject : this.gameObjects)
-    {
-      gameObject.start();
-    }
+    gamePanel.startAll();
+
     while (state != State.EXITING)
     {
-      for (GameObject gameObject : this.gameObjects)
-      {
-        gameObject.update();
-      }
-      // repaint();
+      gamePanel.updateAll();
     }
   }
 }
