@@ -12,13 +12,16 @@ abstract class GameObject extends JPanel // should this be a jcomponent or somet
   private int x_pos;
   private int y_pos;
   
-  abstract public void start(); // called first time the object is instantiated
-  abstract public void update(); // called each loop
+  /* start is called the first time the main loop runs, and should be used for any initialization
+  that can't be done in the constructor. an empty start method is perfectly fine */
+  abstract public void start();
+
+  /* update is called each time the main loop runs, and is where most logic should go */
+  abstract public void update();
 
   public int getPosX() { return x_pos; }
   public int getPosY() { return y_pos; }
   
-
   public void setPosition(int x, int y)
   {
     x_pos = x;

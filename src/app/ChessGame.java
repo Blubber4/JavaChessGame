@@ -7,6 +7,7 @@ import java.awt.Dimension;
 // board should also extend GameObject
 public class ChessGame
 {
+  // cached references
   private JFrame window;
   private State state;
   private GamePanel gamePanel;

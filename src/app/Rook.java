@@ -6,12 +6,11 @@ public class Rook extends ChessPiece
 {
   public Rook()
   {
-    super("Rook.png");
+    super("Rook.png", 0, 0);
   }
 
   public Rook(int x, int y)
   {
-    super("Rook.png");
-    setPosition(x, y);
+    super("Rook.png", x, y);
   }
 }

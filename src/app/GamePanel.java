@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel {
+  // cached references
   private List<GameObject> gameObjects;
   private Timer timer;
 
@@ -22,7 +23,7 @@ public class GamePanel extends JPanel {
 
   public GamePanel()
   {
-    initPanel(600, 00); // default pane size here
+    initPanel(600, 600); // default pane size here
   }
 
   private void initPanel(int width, int height)
