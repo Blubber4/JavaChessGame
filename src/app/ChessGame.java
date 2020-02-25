@@ -1,6 +1,7 @@
 package app;
 
 import javax.swing.JFrame;
+import java.awt.Dimension;
 
 // Rook extends ChessPiece extends GameObject
 // board should also extend GameObject
@@ -34,7 +35,7 @@ public class ChessGame
   {
     this.window = new JFrame("Chess Game");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    window.setSize(width, height);
+    window.setPreferredSize(new Dimension(width, height));
     window.add(gamePanel);
     window.setContentPane(gamePanel);
     window.pack();
