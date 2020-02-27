@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -61,10 +63,24 @@ public class GamePanel extends JPanel {
       gameObject.update();
     }
   }
+  
+  private void drawBoard(Graphics g) {
+	  int blockSizeX = this.getSize().width / 8;
+	  int blockSizeY = this.getSize().height / 8;
+	  for(int pos = 0; pos < 8*8; pos++) {
+		  int x = (pos % 8) * blockSizeX;
+		  int y = (pos / 8) * blockSizeY;
+		  int offset = (pos % 16) < 8 ? 0:1;
+		  Color color = (pos + offset) % 2 == 0 ? Color.WHITE : Color.black;
+		  g.setColor(color);
+		  g.fillRect(x, y, blockSizeX, blockSizeY);
+	  }
+  }
 
   @Override
   protected void paintComponent(Graphics g) {
       super.paintComponent(g);
+      drawBoard(g);
       for (GameObject gameObject : gameObjects) {
           gameObject.draw(g);
       }
