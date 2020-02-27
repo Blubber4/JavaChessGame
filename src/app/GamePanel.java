@@ -8,6 +8,9 @@ import javax.swing.Timer;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,11 +34,12 @@ public class GamePanel extends JPanel {
     gameObjects = new ArrayList<>();
     setPreferredSize(new Dimension(width, height));
 
-    timer = new Timer(40, new ActionListener()
+    timer = new Timer(10, new ActionListener()
     {
       public void actionPerformed(ActionEvent e)
       {
-        repaint(); // THIS IS NOT MOVING PROPERLY
+        updateAll();
+        repaint();
       }
     });
     timer.start();
@@ -62,11 +66,46 @@ public class GamePanel extends JPanel {
     }
   }
 
-  @Override
-  protected void paintComponent(Graphics g) {
-      super.paintComponent(g);
-      for (GameObject gameObject : gameObjects) {
-          gameObject.draw(g);
+  private void drawBoard(Graphics g) {
+	  int blockSizeX = this.getSize().width / 8;
+	  int blockSizeY = this.getSize().height / 8;
+	  for(int pos = 0; pos < 8*8; pos++) {
+		  int x = (pos % 8) * blockSizeX;
+		  int y = (pos / 8) * blockSizeY;
+		  int offset = (pos % 16) < 8 ? 0:1;
+		  Color color = (pos + offset) % 2 == 0 ? Color.WHITE : Color.black;
+		  g.setColor(color);
+		  g.fillRect(x, y, blockSizeX, blockSizeY);
+	  }
+  }
+
+  /* for possible use later, not doing anything right now */
+  public List<IClickable> getIntersections(Point p)
+  {
+    List<IClickable> clickables = new ArrayList<>();
+    for (GameObject gameObject : gameObjects)
+    {
+      IClickable clickable = null;
+      if (gameObject instanceof IClickable)
+      {
+        clickable = (IClickable) gameObject;
       }
+      if (clickable != null && clickable.intersects(p))
+      {
+        clickables.add(clickable);
+      }
+    }
+    return clickables;
+  }
+
+  // override of JPanel drawing
+  @Override
+  protected void paintComponent(Graphics g)
+  {
+    super.paintComponent(g);
+    drawBoard(g);
+    for (GameObject gameObject : gameObjects) {
+      gameObject.draw(g);
+    }
   }
 }

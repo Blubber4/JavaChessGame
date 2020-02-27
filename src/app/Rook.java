@@ -1,7 +1,5 @@
 package app;
 
-import java.awt.Graphics;
-
 public class Rook extends ChessPiece
 {
   public Rook()

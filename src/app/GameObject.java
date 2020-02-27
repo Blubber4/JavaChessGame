@@ -1,12 +1,14 @@
 package app;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Point;
 
-abstract class GameObject extends JPanel // should this be a jcomponent or something else instead of a jpanel?
+abstract class GameObject extends JComponent
 {
   // instance vars
   private int x_pos;
@@ -16,12 +18,14 @@ abstract class GameObject extends JPanel // should this be a jcomponent or somet
   that can't be done in the constructor. an empty start method is perfectly fine */
   abstract public void start();
 
-  /* update is called each time the main loop runs, and is where most logic should go */
+  /* update is called before each draw call, and is where most logic should go
+   ideally update will be called independent of draw call, but thats not working yet */
   abstract public void update();
 
   public int getPosX() { return x_pos; }
   public int getPosY() { return y_pos; }
   
+  /* sets the gameobject's position relative to top right corner of the content pane */
   public void setPosition(int x, int y)
   {
     x_pos = x;
@@ -34,6 +38,8 @@ abstract class GameObject extends JPanel // should this be a jcomponent or somet
     return image;
   }
 
-  /* should be called every time paintComponent() or repaint() is called by timer. INDEPENDENT OF UPDATE LOOP */
+  public abstract boolean intersects(Point p);
+
+  /* should be called every time paintComponent() or repaint() is called by game timer. */
   public abstract void draw(Graphics g);
 }
