@@ -25,7 +25,7 @@ abstract class GameObject extends JComponent
   public int getPosX() { return x_pos; }
   public int getPosY() { return y_pos; }
   
-  /* sets the gameobject's position relative to top right corner of the content pane */
+  /* sets the gameobject's position relative to top left corner of the content pane */
   public void setPosition(int x, int y)
   {
     x_pos = x;

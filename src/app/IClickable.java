@@ -6,7 +6,9 @@ import java.awt.Point;
 public interface IClickable {
   /* isHovered() should return true if the mouse is currently over the IClickable object */
   public boolean intersects(Point p);
+  public boolean isHovered();
   public void onHover();
   public void onUnhover();
   public void onClick();
+  public void onClickAway(Point p);
 }

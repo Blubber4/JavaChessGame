@@ -41,7 +41,7 @@ public class ChessGame
     window.setPreferredSize(new Dimension(width, height));
     window.add(gamePanel);
     window.setContentPane(gamePanel);
-    //window.addMouseListener(new GameMouseListener());
+    window.addMouseListener(new GameMouseListener(gamePanel));
     window.pack();
     window.setVisible(true);
   }

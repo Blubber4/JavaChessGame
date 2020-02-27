@@ -10,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -66,10 +65,12 @@ public class GamePanel extends JPanel {
     }
   }
 
-  private void drawBoard(Graphics g) {
+  private void drawBoard(Graphics g)
+  {
 	  int blockSizeX = this.getSize().width / 8;
 	  int blockSizeY = this.getSize().height / 8;
-	  for(int pos = 0; pos < 8*8; pos++) {
+    for(int pos = 0; pos < 8*8; pos++)
+    {
 		  int x = (pos % 8) * blockSizeX;
 		  int y = (pos / 8) * blockSizeY;
 		  int offset = (pos % 16) < 8 ? 0:1;
@@ -79,17 +80,18 @@ public class GamePanel extends JPanel {
 	  }
   }
 
-  /* for possible use later, not doing anything right now */
   public List<IClickable> getIntersections(Point p)
   {
     List<IClickable> clickables = new ArrayList<>();
     for (GameObject gameObject : gameObjects)
     {
       IClickable clickable = null;
+
       if (gameObject instanceof IClickable)
       {
         clickable = (IClickable) gameObject;
       }
+
       if (clickable != null && clickable.intersects(p))
       {
         clickables.add(clickable);
