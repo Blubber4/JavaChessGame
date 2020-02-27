@@ -2,17 +2,18 @@ package app;
 
 import javax.swing.JFrame;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.util.List;
 
-// Rook extends ChessPiece extends GameObject
-// board should also extend GameObject
 public class ChessGame
 {
   // cached references
   private JFrame window;
-  private State GameState;
   private GamePanel gamePanel;
+
+  // config params
+  private final int DEFAULT_WIDTH = 600;
+  private final int DEFAULT_HEIGHT = 600;
+
+  private State GameState; // not used yet
 
   public enum State {
     EXITING,
@@ -24,7 +25,7 @@ public class ChessGame
   {
     this.gamePanel = new GamePanel();
     initPieces();
-    initWindow(600, 600); // default window size here
+    initWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT); // default window size here
   }
 
 /* this needs to be called before initWindow() */

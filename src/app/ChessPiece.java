@@ -8,7 +8,12 @@ import java.awt.Point;
 
 abstract class ChessPiece extends GameObject implements IClickable
 {
-  private final int borderThickness = 6;
+  // config params
+  private final int BORDER_THICKNESS = 6;
+  private final int INITIAL_WIDTH = 100; // initial (scaled) width of the piece
+  private final int INITIAL_HEIGHT = 120; // initial (scaled) height of the piece
+
+  // instance vars
   protected String image_filename;
   protected Image image;
   protected Rectangle hitBox; // this may need to be a more complex shape later - hitbox class?
@@ -28,9 +33,9 @@ abstract class ChessPiece extends GameObject implements IClickable
     this.image = loadImage(image_filename);
     this.pieceState = PieceState.IDLE; // default state should be idle
     this.mouseState = PieceState.IDLE;
-    this.hitBox = new Rectangle(getPosX(), getPosY(), 100, 120);
+    this.hitBox = new Rectangle(getPosX(), getPosY(), INITIAL_WIDTH, INITIAL_HEIGHT);
     setPosition(x, y);
-    scaleImage(100, 120);
+    scaleImage(INITIAL_WIDTH, INITIAL_HEIGHT);
   }
 
   public void start()
@@ -52,11 +57,13 @@ abstract class ChessPiece extends GameObject implements IClickable
     super.setPosition(x, y);
   }
 
+  /* changes the width and height directly, not a multiplicative scale */
   private void scaleImage(int newWidth, int newHeight)
   {
     image = image.getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT);
   }
 
+  /* shifts the object by the given horizontal and vertical amounts (respectively) */
   public void move(int x, int y)
   {
     setPosition(getPosX() + x, getPosY() + y);
@@ -69,7 +76,7 @@ abstract class ChessPiece extends GameObject implements IClickable
     setPosition(x, y);
   }
 
-  // IClickable implementation here
+  /* IClickable implementation here */
   public void onClickAway(Point p)
   {
     moveTo(p);
@@ -107,7 +114,9 @@ abstract class ChessPiece extends GameObject implements IClickable
       pieceState = PieceState.SELECTED;
     }
   }
+  /* end IClickable implementation */
 
+/* returns true if Point p is contained within the piece's hitbox */
   public boolean intersects(Point p)
   {
     if (hitBox.contains(p))
@@ -120,22 +129,22 @@ abstract class ChessPiece extends GameObject implements IClickable
   // draw call
   public void draw(Graphics g) 
   {
-    int x = getPosX() - borderThickness;
-    int y = getPosY() - borderThickness;
-    int width = image.getWidth(null) + borderThickness*2;
-    int height = image.getHeight(null) + borderThickness*2;
+    int x = getPosX() - BORDER_THICKNESS;
+    int y = getPosY() - BORDER_THICKNESS;
+    int width = image.getWidth(null) + BORDER_THICKNESS*2;
+    int height = image.getHeight(null) + BORDER_THICKNESS*2;
 
-    // draw border first if hovered
+    // set border color if hovered
     if (mouseState == PieceState.HOVERED)
     {
       g.setColor(Color.RED);
     }
-
+    // set border color if selected
     if (pieceState == PieceState.SELECTED)
     {
       g.setColor(Color.YELLOW);
     }
-
+    // draw border if hovered or selected
     if (pieceState == PieceState.SELECTED || mouseState == PieceState.HOVERED)
     {
       g.drawRect(
@@ -145,7 +154,6 @@ abstract class ChessPiece extends GameObject implements IClickable
         height );
       g.fillRect(x, y, width, height);
     }
-
     g.drawImage(this.image, getPosX(), getPosY(), null);
   }
 }
