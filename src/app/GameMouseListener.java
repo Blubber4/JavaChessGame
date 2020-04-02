@@ -7,10 +7,10 @@ import java.awt.Point;
 
 import javax.swing.event.MouseInputAdapter;
 
-/* mouse listener is attached to main frame, so points will have to be adjusted to consider position relative to the window */
+/* this class was a failed idea, but I'm leaving it here for later reference/to maybe fix it, and for the isClickable() function. */
 public class GameMouseListener extends MouseInputAdapter {
-  // cached references
-  GamePanel gamePanel; // to GamePanel for intersection checking - seems messy, better way?
+  // cached reference to GamePanel for intersection checking - this is messy, is there a better way to do it?
+  GamePanel gamePanel;
   IClickable hoveredObject;
   IClickable selectedObject;
 
@@ -36,13 +36,7 @@ public class GameMouseListener extends MouseInputAdapter {
     }
     else if (intersections.size() > 1)
     {
-      // will have more logic here later, for now return is fine
-      // right now his means stacked objects cannot be clicked where they intersect
-      return; 
-    }
-    if (selectedObject != null)
-    {
-      selectedObject.onClick();
+      return; // will have more logic here later, for now return is fine
     }
     selectedObject = intersections.get(0);
     selectedObject.onClick();
@@ -57,7 +51,7 @@ public class GameMouseListener extends MouseInputAdapter {
     return false;
   }
 
-  /* EVERYTHING BELOW THIS POINT NOT IMPLEMENTED PROPERLY YET - IGNORE
+  /* EVERYTHING BELOW THIS POINT NOT IMPLEMENTED PROPERLY YET - IGNORE COMMENTS
   @Override
   public void mouseMoved(MouseEvent e)
   {

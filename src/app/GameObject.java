@@ -1,6 +1,7 @@
 package app;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -17,7 +18,7 @@ abstract class GameObject extends JComponent
   that can't be done in the constructor. an empty start method is perfectly fine */
   abstract public void start();
 
-  /* update is called by timer before each draw call, and is where most animation logic should go
+  /* update is called before each draw call, and is where most logic should go
    ideally update will be called independent of draw call, but thats not working yet */
   abstract public void update();
 
@@ -31,12 +32,13 @@ abstract class GameObject extends JComponent
     y_pos = y;
   }
 
-  /* loads image with filename in the project's resources folder */
-  protected Image loadImage(String filename)
+  protected Image loadImage(String filename) // maybe should be static?
   {   
     Image image = Toolkit.getDefaultToolkit().getImage("resources/" + filename);
     return image;
   }
+
+  public abstract boolean intersects(Point p);
 
   /* should be called every time paintComponent() or repaint() is called by game timer. */
   public abstract void draw(Graphics g);

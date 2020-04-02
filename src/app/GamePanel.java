@@ -18,11 +18,6 @@ public class GamePanel extends JPanel {
   private List<GameObject> gameObjects;
   private Timer timer;
 
-  // config params
-  private final int DEF_WIDTH = 600; // default panel width
-  private final int DEF_HEIGHT = 600; // default panel height
-  private final int REFRESH_RATE = 10; // how often update and redraw will be called in ms
-
   public GamePanel(int width, int height)
   {
     initPanel(width, height);
@@ -30,15 +25,15 @@ public class GamePanel extends JPanel {
 
   public GamePanel()
   {
-    initPanel(DEF_WIDTH, DEF_HEIGHT);
+    initPanel(600, 600); // default pane size here
   }
 
   private void initPanel(int width, int height)
   {
     gameObjects = new ArrayList<>();
     setPreferredSize(new Dimension(width, height));
-    /* all updating and drawing of gameobjects takes place here for now */
-    timer = new Timer(REFRESH_RATE, new ActionListener()
+
+    timer = new Timer(10, new ActionListener()
     {
       public void actionPerformed(ActionEvent e)
       {
@@ -85,7 +80,6 @@ public class GamePanel extends JPanel {
 	  }
   }
 
-  /* returns a list of all clickable objects that contain point p */
   public List<IClickable> getIntersections(Point p)
   {
     List<IClickable> clickables = new ArrayList<>();
