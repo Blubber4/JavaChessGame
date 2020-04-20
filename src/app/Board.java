@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * This is the Board Class. It is the token class of our GUI.
+ * This is the Board Class. 
  * There are total of 64 cells that together makes up the Chess Board
  * This sets up the grid and allows each cell to have a chess piece.
  */
@@ -91,7 +91,7 @@ abstract class Board extends GameObject implements Cloneable{
 	public void removepossibledestination() //Remove the cell from the list of possible moves
 	{
 		this.setBorder(null);
-		this.ispossibledestination = alse;
+		this.ispossibledestination = false;
 	}
 	
 	public boolean ispossibledestination()    //Function to check if the cell is a possible destination 

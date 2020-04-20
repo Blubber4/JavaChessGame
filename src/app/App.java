@@ -41,7 +41,8 @@ public class App extends JFrame implements MouseListener{
 
     public static void main(String[] args) {
 
-        //variable initialization for each chess piece
+		//variable initialization for each chess piece
+		//We can change this if necessary
 	    wr01 = new Rook("WR01","White_Rook.png",0);
 	    wr02 = new Rook("WR02","White_Rook.png",0);
 	    br01 = new Rook("BR01","Black_Rook.png",1);
