@@ -41,7 +41,7 @@ public class Player implements Serializable{
 	{
 		return name;
 	}
-	
+	/*
 	//Returns the number of games played
 	public Integer gamesplayed()
 	{
@@ -71,7 +71,7 @@ public class Player implements Serializable{
 	{
 		gameswon++;
 	}
-	
+	*/
 	
 	public static ArrayList<Player> fetch_players()         //Function to fetch the list of the players
 	{

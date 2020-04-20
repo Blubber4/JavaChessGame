@@ -5,6 +5,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+
 import pieces.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,11 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
-
-/**
- * @author Ashish Kedia and Adarsh Mohata
- *
- */
 
 
 /**
@@ -168,8 +164,8 @@ public class Main extends JFrame implements MouseListener
 		BlackPlayer.setBorder(BorderFactory.createTitledBorder(null, "Black Player", TitledBorder.TOP,TitledBorder.CENTER, new Font("times new roman",Font.BOLD,18), Color.BLUE));
 	    BlackPlayer.setLayout(new BorderLayout());
 		
-	    JPanel whitestats=new JPanel(new GridLayout(3,3));
-		JPanel blackstats=new JPanel(new GridLayout(3,3));
+	    //JPanel whitestats=new JPanel(new GridLayout(3,3));
+		//JPanel blackstats=new JPanel(new GridLayout(3,3));
 		wcombo=new JComboBox<String>(WNames);
 		bcombo=new JComboBox<String>(BNames);
 		wscroll=new JScrollPane(wcombo);
@@ -192,14 +188,14 @@ public class Main extends JFrame implements MouseListener
 		bcombopanel.add(BNewPlayer);
 		WhitePlayer.add(wcombopanel,BorderLayout.NORTH);
 		BlackPlayer.add(bcombopanel,BorderLayout.NORTH);
-		whitestats.add(new JLabel("Name   :"));
-		whitestats.add(new JLabel("Played :"));
-		whitestats.add(new JLabel("Won    :"));
-		blackstats.add(new JLabel("Name   :"));
-		blackstats.add(new JLabel("Played :"));
-		blackstats.add(new JLabel("Won    :"));
-		WhitePlayer.add(whitestats,BorderLayout.WEST);
-		BlackPlayer.add(blackstats,BorderLayout.WEST);
+		//whitestats.add(new JLabel("Name   :"));
+		//whitestats.add(new JLabel("Played :"));
+		//whitestats.add(new JLabel("Won    :"));
+		//blackstats.add(new JLabel("Name   :"));
+		//blackstats.add(new JLabel("Played :"));
+		//blackstats.add(new JLabel("Won    :"));
+		//WhitePlayer.add(whitestats,BorderLayout.WEST);
+		//BlackPlayer.add(blackstats,BorderLayout.WEST);
 		controlPanel.add(WhitePlayer);
 		controlPanel.add(BlackPlayer);
 		
@@ -252,15 +248,16 @@ public class Main extends JFrame implements MouseListener
 				boardState[i][j]=cell;
 			}
 		showPlayer=new JPanel(new FlowLayout());  
-		showPlayer.add(timeSlider);
-		JLabel setTime=new JLabel("Set Timer(in mins):"); 
+		//showPlayer.add(timeSlider);
+		//JLabel setTime=new JLabel("Set Timer(in mins):"); 
 		start=new Button("Start");
 		start.setBackground(Color.black);
 		start.setForeground(Color.white);
 	    start.addActionListener(new START());
 		start.setPreferredSize(new Dimension(120,40));
-		setTime.setFont(new Font("Arial",Font.BOLD,16));
-		label = new JLabel("Time Starts now", JLabel.CENTER);
+		//setTime.setFont(new Font("Arial",Font.BOLD,16));
+        /*
+        label = new JLabel("Time Starts now", JLabel.CENTER);
 		  label.setFont(new Font("SERIF", Font.BOLD, 30));
 	      displayTime=new JPanel(new FlowLayout());
 	      time=new JPanel(new GridLayout(3,3));
@@ -268,7 +265,7 @@ public class Main extends JFrame implements MouseListener
 	      time.add(showPlayer);
 	      displayTime.add(start);
 	      time.add(displayTime);
-	      controlPanel.add(time);
+	      controlPanel.add(time); */
 		board.setMinimumSize(new Dimension(800,700));
 		
 		//The Left Layout When Game is inactive
@@ -310,7 +307,7 @@ public class Main extends JFrame implements MouseListener
 			previous.deselect();
 		previous=null;
 		chance^=1;
-		if(!end && timer!=null)
+		/*if(!end && timer!=null)
 		{
 			timer.reset();
 			timer.start();
@@ -321,7 +318,8 @@ public class Main extends JFrame implements MouseListener
 				Main.move="White";
 			CHNC.setText(Main.move);
 			showPlayer.add(CHNC);
-		}
+        }
+        */
 	}
 	
 	//A function to retrieve the Black King or White King
@@ -470,13 +468,13 @@ public class Main extends JFrame implements MouseListener
     	if(previous!=null)
     		previous.removePiece();
     	if(chance==0)
-		{	White.updateGamesWon();
+		{	//White.updateGamesWon();
 			White.Update_Player();
 			winner=White.name();
 		}
 		else
 		{
-			Black.updateGamesWon();
+			//Black.updateGamesWon();
 			Black.Update_Player();
 			winner=Black.name();
 		}
@@ -509,7 +507,7 @@ public class Main extends JFrame implements MouseListener
     //which is called when the user clicks on a particular cell
 	@Override
 	public void mouseClicked(MouseEvent arg0){
-		// TODO Auto-generated method stub
+
 		c=(Cell)arg0.getSource();
 		if (previous==null)
 		{
@@ -615,19 +613,19 @@ public class Main extends JFrame implements MouseListener
     //Other Irrelevant abstract function. Only the Click Event is captured.
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	
 	}
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub		
+		
 	}
 	
 	
@@ -642,9 +640,9 @@ public class Main extends JFrame implements MouseListener
 		if(White==null||Black==null)
 			{JOptionPane.showMessageDialog(controlPanel, "Fill in the details");
 			return;}
-		White.updateGamesPlayed();
+		//White.updateGamesPlayed();
 		White.Update_Player();
-		Black.updateGamesPlayed();
+		//Black.updateGamesPlayed();
 		Black.Update_Player();
 		WNewPlayer.disable();
 		BNewPlayer.disable();
@@ -732,8 +730,8 @@ public class Main extends JFrame implements MouseListener
 				for (Player s:opl)
 					ojc.addItem(s.name());
 				det.add(new JLabel(" "+tempPlayer.name()));
-				det.add(new JLabel(" "+tempPlayer.gamesplayed()));
-				det.add(new JLabel(" "+tempPlayer.gameswon()));
+				//det.add(new JLabel(" "+tempPlayer.gamesplayed()));
+				//det.add(new JLabel(" "+tempPlayer.gameswon()));
 				
 				PL.revalidate();
 				PL.repaint();
