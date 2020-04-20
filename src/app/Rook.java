@@ -1,14 +1,24 @@
 package app;
 
-public class Rook extends ChessPiece
-{
-  public Rook()
-  {
-    super("Rook.png", 0, 0);
+import java.util.ArrayList;
+
+/**
+ * This is the Rook class inherited from abstract Piece class
+ *
+ */
+
+public class Rook extends ChessPiece{
+
+  public Rook(String i,String p,int c)
+	{
+		setId(i);
+		setPath(p);
+		setColor(c);
   }
 
-  public Rook(int x, int y)
-  {
-    super("Rook.png", x, y);
+  //Move function defined
+  public ArrayList<Board> move(Board state[][],int x,int y){
+    //Rook can move only horizontally or vertically
+    possiblemoves.clear();
   }
 }
