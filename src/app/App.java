@@ -37,7 +37,8 @@ public class App extends JPanel{
 	//private Container content;
 
     //private JPanel board = new JPanel(new GridLayout(8,8));
-    public static App Mainboard;
+	public static App Mainboard;
+	//private Button start;
     static String move;
 
 
@@ -80,7 +81,7 @@ public class App extends JPanel{
 		JButton button = new JButton("New Game");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                frame.dispose(); //temporary action after pressing button
             }
         });
         JPanel panel = new JPanel();
@@ -91,7 +92,9 @@ public class App extends JPanel{
         frame.pack();
         frame.setLocation(500,500);
 		frame.setVisible(true);
-		
+		button.setBackground(Color.white);
+		button.setForeground(Color.black);
+
 		/*
 		JFrame board = new JFrame("Chess");
         board.setMinimumSize(new Dimension(720,480));
