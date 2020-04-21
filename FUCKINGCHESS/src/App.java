@@ -1,4 +1,3 @@
-package app;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +19,7 @@ import java.util.ListIterator;
  * It is inherited from the JFrame Class of Java's Swing Library. 
  */
 
-public class App extends JPanel{
+public class App {
     private static final long serialVersionUID = 1L;
 	JFrame frame;
     //config params for window 
@@ -77,7 +76,7 @@ public class App extends JPanel{
 
     public App(){
 
-		JButton button = new JButton("New Game");
+		JButton button = new JButton("exit");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
@@ -89,7 +88,7 @@ public class App extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
         frame.pack();
-        frame.setLocation(500,500);
+        frame.setLocation(200,200);
 		frame.setVisible(true);
 		
 		/*
