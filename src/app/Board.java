@@ -31,7 +31,7 @@ abstract class Board extends GameObject implements Cloneable{
 		setLayout(new BorderLayout());
 	
 	    if(( x + y ) % 2 == 0)
-	        setBackground(Color.green);
+	        setBackground(Color.red);
 	    else
 	     setBackground(Color.white);
 	    if( p != null)
