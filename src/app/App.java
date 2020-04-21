@@ -33,6 +33,7 @@ public class App extends JFrame implements MouseListener{
     private static King wk,bk;
     private ArrayList<Board> destinationlist = new ArrayList<Board>();
 	private JLabel label,mov;
+	private Container content;
 
     private JPanel board = new JPanel(new GridLayout(8,8));
     public static App Mainboard;
@@ -75,7 +76,15 @@ public class App extends JFrame implements MouseListener{
     private App(){
 
         board = new JPanel(new GridLayout(8,8));
-        board.setMinimumSize(new Dimension(800,700));
+        board.setMinimumSize(new Dimension(720,480));
+		board.setBorder(BorderFactory.createLoweredBevelBorder());
+		content = getContentPane();
+		setSize(WIDTH, HEIGHT);
+		setTitle("Chess");
+		content.setBackground(Color.black);
+		content.setLayout(new BorderLayout());
+
+
 
     }
 
