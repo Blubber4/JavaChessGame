@@ -14,15 +14,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel {
-  // cached references
-  private List<GameObject> gameObjects;
-  private Timer timer;
+    // cached references
+    private List<GameObject> gameObjects;
+    private Timer timer;
 
   // config params
   private final int DEF_WIDTH = 600; // default panel width
   private final int DEF_HEIGHT = 600; // default panel height
   private final int REFRESH_RATE = 10; // how often update and redraw will be called in ms
-  
+
   private Board board = new Board();
 
   public GamePanel(int width, int height)
@@ -62,50 +62,57 @@ public class GamePanel extends JPanel {
     {
       gameObject.start();
     }
-  }
 
-  public void updateAll()
-  {
-    for (GameObject gameObject : gameObjects)
-    {
-      gameObject.update();
+    public GamePanel() {
+        initPanel(DEF_WIDTH, DEF_HEIGHT);
     }
-  }
 
   private void drawBoard(Graphics g)
   {
 	  board.draw(g);
   }
 
-  /* returns a list of all clickable objects that contain point p */
-  public List<IClickable> getIntersections(Point p)
-  {
-    List<IClickable> clickables = new ArrayList<>();
-    for (GameObject gameObject : gameObjects)
-    {
-      IClickable clickable = null;
-
-      if (gameObject instanceof IClickable)
-      {
-        clickable = (IClickable) gameObject;
-      }
-
-      if (clickable != null && clickable.intersects(p))
-      {
-        clickables.add(clickable);
-      }
+    public void add(GameObject gameObject) {
+        gameObjects.add(gameObject);
     }
-    return clickables;
-  }
 
-  // override of JPanel drawing
-  @Override
-  protected void paintComponent(Graphics g)
-  {
-    super.paintComponent(g);
-    drawBoard(g);
-    for (GameObject gameObject : gameObjects) {
-      gameObject.draw(g);
+    private void drawBoard(Graphics g) {
+        int blockSizeX = this.getSize().width / 8;
+        int blockSizeY = this.getSize().height / 8;
+        for (int pos = 0; pos < 8 * 8; pos++) {
+            int x = (pos % 8) * blockSizeX;
+            int y = (pos / 8) * blockSizeY;
+            int offset = (pos % 16) < 8 ? 0 : 1;
+            Color color = (pos + offset) % 2 == 0 ? Color.WHITE : Color.black;
+            g.setColor(color);
+            g.fillRect(x, y, blockSizeX, blockSizeY);
+        }
     }
-  }
+
+    /* returns a list of all clickable objects that contain point p */
+    public List<IClickable> getIntersections(Point p) {
+        List<IClickable> clickables = new ArrayList<>();
+        for (GameObject gameObject : gameObjects) {
+            IClickable clickable = null;
+
+            if (gameObject instanceof IClickable) {
+                clickable = (IClickable) gameObject;
+            }
+
+            if (clickable != null && clickable.intersects(p)) {
+                clickables.add(clickable);
+            }
+        }
+        return clickables;
+    }
+
+    // override of JPanel drawing
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawBoard(g);
+        for (GameObject gameObject : gameObjects) {
+            gameObject.draw(g);
+        }
+    }
 }
