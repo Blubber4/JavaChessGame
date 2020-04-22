@@ -1,5 +1,8 @@
 package app;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -16,13 +19,20 @@ abstract class ChessPiece implements Cloneable {
     private int color;
     private String id = null;
     private String path;
-    protected ArrayList<Board> possiblemoves = new ArrayList<Board>(); // Protected (access from child classes)
-
-    public abstract ArrayList<Board> move(Board pos[][], int x, int y); // Abstract Function. Must be overridden
+    protected ArrayList<Point> possiblemoves = new ArrayList<Point>(); // Protected (access from child classes)
+    private Point location = null;
 
     // Id Setter for each piece
     public void setId(String id) {
         this.id = id;
+    }
+    
+    public Point getlocation() {
+    	return location;
+    }
+    
+    public void setlocation(Point p) {
+    	this.location = p;
     }
 
     // Path Setter
@@ -55,4 +65,6 @@ abstract class ChessPiece implements Cloneable {
     public ChessPiece getcopy() throws CloneNotSupportedException {
         return (ChessPiece) this.clone();
     }
+    
+    public abstract void draw(Graphics g);
 }

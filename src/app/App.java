@@ -83,7 +83,8 @@ public class App extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(gamePanel);
         frame.pack();
-        frame.setLocation(500,500);
+        //frame.setLocation(500,500);
+        frame.setResizable(false);
 		frame.setVisible(true);
 
 		/*

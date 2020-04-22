@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel {
     // cached references
-    private List<GameObject> gameObjects;
     private Timer timer;
 
   // config params
@@ -37,31 +36,22 @@ public class GamePanel extends JPanel {
 
   private void initPanel(int width, int height)
   {
-    gameObjects = new ArrayList<>();
+	this.board.createPieces();
     setPreferredSize(new Dimension(width, height));
-    /* all updating and drawing of gameobjects takes place here for now */
     timer = new Timer(REFRESH_RATE, new ActionListener()
     {
       public void actionPerformed(ActionEvent e)
       {
-        updateAll();
+        //updateAll();
         repaint();
       }
     });
     //timer.start();
   }
 
-  public void add(GameObject gameObject)
-  {
-    gameObjects.add(gameObject);
-  }
-
   public void startAll()
   {
-    for (GameObject gameObject : gameObjects)
-    {
-      gameObject.start();
-    }
+    
   }
 
   private void drawBoard(Graphics g)
@@ -69,30 +59,10 @@ public class GamePanel extends JPanel {
 	  board.draw(g);
   }
 
-    /* returns a list of all clickable objects that contain point p */
-    public List<IClickable> getIntersections(Point p) {
-        List<IClickable> clickables = new ArrayList<>();
-        for (GameObject gameObject : gameObjects) {
-            IClickable clickable = null;
-
-            if (gameObject instanceof IClickable) {
-                clickable = (IClickable) gameObject;
-            }
-
-            if (clickable != null && clickable.intersects(p)) {
-                clickables.add(clickable);
-            }
-        }
-        return clickables;
-    }
-
     // override of JPanel drawing
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBoard(g);
-        for (GameObject gameObject : gameObjects) {
-            gameObject.draw(g);
-        }
     }
 }
