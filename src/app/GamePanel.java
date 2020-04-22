@@ -63,12 +63,12 @@ public class GamePanel extends JPanel implements MouseListener{
 	  board.draw(g);
   }
 
-    // override of JPanel drawing
-    @Override
+  // override of JPanel drawing
+  @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawBoard(g);
-    }
+      super.paintComponent(g);
+      drawBoard(g);
+  }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.DimensionUIResource;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -22,71 +23,58 @@ import java.util.ListIterator;
 
 public class App extends JPanel {
 	private static final long serialVersionUID = 1L;
-	JFrame frame;
 
-	// config params for window
-	private final int HEIGHT = 1080;
-	private final int WIDTH = 720;
+	//config params for window
+	private final int HEIGHT = 800;
+	private final int WIDTH = 1000;
 
-	// private static Rook wr01,wr02,br01,br02;
-	// private static Knight wk01,wk02,bk01,bk02;
-	// private static Bishop wb01,wb02,bb01,bb02;
-	// private static Pawn wp[],bp[];
-	// private static Queen wq,bq;
-	// private static King wk,bk;
 	// private ArrayList<Board> destinationlist = new ArrayList<Board>();
-	// private JLabel label,mov;
-	// private Container content;
 
-	// private JPanel board = new JPanel(new GridLayout(8,8));
-	public static App Mainboard;
-	static String move;
 
 	public static void main(String[] args) {
 		new App();
-
-		/*
-		 * //variable initialization for each chess piece //We can change this if
-		 * necessary wr01 = new Rook("WR01","White_Rook.png",0); wr02 = new
-		 * Rook("WR02","White_Rook.png",0); br01 = new Rook("BR01","Black_Rook.png",1);
-		 * br02 = new Rook("BR02","Black_Rook.png",1); wk01 = new
-		 * Knight("WK01","White_Knight.png",0); wk02 = new
-		 * Knight("WK02","White_Knight.png",0); bk01 = new
-		 * Knight("BK01","Black_Knight.png",1); bk02 = new
-		 * Knight("BK02","Black_Knight.png",1); wb01 = new
-		 * Bishop("WB01","White_Bishop.png",0); wb02 = new
-		 * Bishop("WB02","White_Bishop.png",0); bb01 = new
-		 * Bishop("BB01","Black_Bishop.png",1); bb02 = new
-		 * Bishop("BB02","Black_Bishop.png",1); wq = new
-		 * Queen("WQ","White_Queen.png",0); bq = new Queen("BQ","Black_Queen.png",1); wk
-		 * = new King("WK","White_King.png",0,7,3); bk = new
-		 * King("BK","Black_King.png",1,0,3); wp = new Pawn[8]; bp = new Pawn[8];
-		 * for(int i = 0; i < 8; i++){ wp[i] = new Pawn("WP0" + (i + 1),
-		 * "White_Pawn.png", 0); bp[i] = new Pawn("BP0" + (i + 1), "Black_Pawn.png", 1);
-		 * }
-		 */
-		// Setting up the board
-		// Mainboard.setVisible(true);
 	}
 
 	public App() {
-		JButton button = new JButton("New Game");
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //frame.dispose();
-            }
-        });
-        JPanel panel = new JPanel();
-        //panel.add(button);
-        GamePanel gamePanel = new GamePanel();
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(gamePanel);
-        frame.pack();
-        //frame.setLocation(500,500);
-        frame.setResizable(false);
-		frame.setVisible(true);
+		//MAIN CONTENT FRAME
+		JFrame mainFrame = new JFrame("Chess Game");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setPreferredSize(new DimensionUIResource(WIDTH, HEIGHT));
+		mainFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
+		mainFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
+		//GAME CONTENT FRAME
+		JFrame gameFrame = new JFrame("Chess Game");
 
+		GamePanel gamePanel = new GamePanel();
+
+		JButton startButton = new JButton("New Game");
+		mainFrame.add(startButton);
+		startButton.setBounds(100,100,100,50);
+
+
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+				mainFrame.dispose();
+				gameFrame.setPreferredSize(new DimensionUIResource(WIDTH, HEIGHT));
+				gameFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
+				gameFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
+				gameFrame.add(gamePanel);
+				gameFrame.setContentPane(gamePanel);
+				gameFrame.setLocationRelativeTo(null);
+				gameFrame.setResizable(true);
+				gameFrame.setVisible(true);
+				gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+
+            }
+		});
+
+		mainFrame.setVisible(true);
+		mainFrame.setResizable(true);
+		mainFrame.setLocationRelativeTo(null);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
 		/*
 		JFrame board = new JFrame("Chess");
         board.setMinimumSize(new Dimension(720,480));
