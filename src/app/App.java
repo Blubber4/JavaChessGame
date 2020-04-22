@@ -28,61 +28,57 @@ public class App extends JPanel {
 	private final int HEIGHT = 800;
 	private final int WIDTH = 1000;
 
-	// private ArrayList<Board> destinationlist = new ArrayList<Board>();
+	private JFrame mainFrame, gameFrame;
+	private GamePanel gamePanel = new GamePanel();
 
+
+	// private ArrayList<Board> destinationlist = new ArrayList<Board>();
 
 	public static void main(String[] args) {
 		new App();
 	}
 
+
 	public App() {
+
 		//MAIN CONTENT FRAME
-		JFrame mainFrame = new JFrame("Chess Game");
+		mainFrame = new JFrame("Chess Game");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setPreferredSize(new DimensionUIResource(WIDTH, HEIGHT));
 		mainFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
 		mainFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
-		//GAME CONTENT FRAME
-		JFrame gameFrame = new JFrame("Chess Game");
 
-		GamePanel gamePanel = new GamePanel();
+		//GAME CONTENT FRAME
+		gameFrame = new JFrame("Chess Game");
 
 		JButton startButton = new JButton("New Game");
 		mainFrame.add(startButton);
 		startButton.setBounds(100,100,100,50);
 
 
-        startButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-				mainFrame.dispose();
-				gameFrame.setPreferredSize(new DimensionUIResource(WIDTH, HEIGHT));
-				gameFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
-				gameFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
-				gameFrame.add(gamePanel);
-				gameFrame.setContentPane(gamePanel);
-				gameFrame.setLocationRelativeTo(null);
-				gameFrame.setResizable(true);
-				gameFrame.setVisible(true);
-				gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
-            }
-		});
+		startButton.addActionListener(new START());
 
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(true);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-		/*
-		JFrame board = new JFrame("Chess");
-        board.setMinimumSize(new Dimension(720,480));
-		//board.setBorder(BorderFactory.createLoweredBevelBorder());
-		//content = getContentPane();
-		board.setSize(WIDTH, HEIGHT);
-		//content.setBackground(Color.black);
-		*/
+
 	}
 
+	class START implements ActionListener{
+	public void actionPerformed(ActionEvent arg0) {
+		mainFrame.dispose();
+		gameFrame.setPreferredSize(new DimensionUIResource(WIDTH, HEIGHT));
+		gameFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
+		gameFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
+		gameFrame.add(gamePanel);
+		gameFrame.setContentPane(gamePanel);
+		gameFrame.setLocationRelativeTo(null);
+		gameFrame.setResizable(true);
+		gameFrame.setVisible(true);
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		}
+	}
 }
