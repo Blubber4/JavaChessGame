@@ -12,8 +12,10 @@ import java.awt.Point;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements MouseListener{
     // cached references
     private Timer timer;
 
@@ -31,6 +33,8 @@ public class GamePanel extends JPanel {
 
   public GamePanel()
   {
+	super();
+	addMouseListener(this);
     initPanel(DEF_WIDTH, DEF_HEIGHT);
   }
 
@@ -65,4 +69,34 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         drawBoard(g);
     }
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		board.mouseClicked(e);
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

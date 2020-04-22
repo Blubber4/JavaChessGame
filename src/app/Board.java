@@ -1,6 +1,8 @@
 package app;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -46,6 +48,7 @@ public class Board extends JComponent{
 		// call deselect
 		// if there is a piece at point x,y
 			// select that piece
+			// call setPossibleMoves
 	}
 
 	public void deselect() //Function to delselect the cell
@@ -62,6 +65,14 @@ public class Board extends JComponent{
 	public void removepossibledestination() // clear the possible destinations
 	{
 		this.possibleMoves = new ArrayList<Point>();
+	}
+	
+	private void setPossibleMoves(ChessPiece p) {
+		// fills the possibleMoves array for the selected piece
+	}
+	
+	public void mouseClicked(MouseEvent e) {
+	       Point p = e.getPoint();
 	}
 
 	public void update() {
