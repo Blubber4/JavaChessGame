@@ -22,6 +22,8 @@ public class GamePanel extends JPanel {
   private final int DEF_WIDTH = 600; // default panel width
   private final int DEF_HEIGHT = 600; // default panel height
   private final int REFRESH_RATE = 10; // how often update and redraw will be called in ms
+  
+  private Board board = new Board();
 
   public GamePanel(int width, int height)
   {
@@ -46,7 +48,7 @@ public class GamePanel extends JPanel {
         repaint();
       }
     });
-    timer.start();
+    //timer.start();
   }
 
   public void add(GameObject gameObject)
@@ -72,17 +74,7 @@ public class GamePanel extends JPanel {
 
   private void drawBoard(Graphics g)
   {
-	  int blockSizeX = this.getSize().width / 8;
-	  int blockSizeY = this.getSize().height / 8;
-    for(int pos = 0; pos < 8*8; pos++)
-    {
-		  int x = (pos % 8) * blockSizeX;
-		  int y = (pos / 8) * blockSizeY;
-		  int offset = (pos % 16) < 8 ? 0:1;
-		  Color color = (pos + offset) % 2 == 0 ? Color.WHITE : Color.black;
-		  g.setColor(color);
-		  g.fillRect(x, y, blockSizeX, blockSizeY);
-	  }
+	  board.draw(g);
   }
 
   /* returns a list of all clickable objects that contain point p */

@@ -72,7 +72,7 @@ public class App extends JPanel{
 
 	    //Setting up the board
         new App();
-	    //Mainboard.setVisible(true);	
+	    Mainboard.setVisible(true);	
     }
 
     public App(){
@@ -80,14 +80,15 @@ public class App extends JPanel{
 		JButton button = new JButton("New Game");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                //frame.dispose();
             }
         });
         JPanel panel = new JPanel();
-        panel.add(button);
+        //panel.add(button);
+        GamePanel gamePanel = new GamePanel();
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
+        frame.add(gamePanel);
         frame.pack();
         frame.setLocation(500,500);
 		frame.setVisible(true);

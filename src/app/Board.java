@@ -9,7 +9,7 @@ import javax.swing.*;
  * This sets up the grid and allows each cell to have a chess piece.
  */
 
-abstract class Board extends GameObject implements Cloneable{
+public class Board extends GameObject implements Cloneable{
 
     private static final long serialVersionUID = 1L;
     private boolean ispossibledestination;
@@ -23,6 +23,12 @@ abstract class Board extends GameObject implements Cloneable{
     protected String image_filename;
     protected Image image;
 
+    public Board() {
+    	// initialize a new board
+    	super();
+    	this.setSize(600,600); // I don't think this is drawing right
+    }
+    
     public Board( int x, int y, ChessPiece p)
 	{		
 		this.x = x;
@@ -118,5 +124,24 @@ abstract class Board extends GameObject implements Cloneable{
 	public boolean ischeck() //Function to check if the current cell is in check
 	{
 		return ischeck;
+	}
+	
+	public void update() {
+		
+	}
+	
+	public void draw(Graphics g) {
+		super.paintComponent(g);
+		int blockSizeX = this.getSize().width / 8;
+		int blockSizeY = this.getSize().height / 8;
+	    for(int pos = 0; pos < 8*8; pos++)
+	    {
+		  int x = (pos % 8) * blockSizeX;
+		  int y = (pos / 8) * blockSizeY;
+		  int offset = (pos % 16) < 8 ? 0:1;
+		  Color color = (pos + offset) % 2 == 0 ? Color.WHITE : Color.BLACK;
+		  g.setColor(color);
+		  g.fillRect(x, y, blockSizeX, blockSizeY);
+		}
 	}
 }
