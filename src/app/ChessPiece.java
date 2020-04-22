@@ -26,13 +26,13 @@ abstract class ChessPiece implements Cloneable {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public Point getlocation() {
-    	return location;
+        return location;
     }
-    
+
     public void setlocation(Point p) {
-    	this.location = p;
+        this.location = p;
     }
 
     // Path Setter
@@ -65,6 +65,6 @@ abstract class ChessPiece implements Cloneable {
     public ChessPiece getcopy() throws CloneNotSupportedException {
         return (ChessPiece) this.clone();
     }
-    
+
     public abstract void draw(Graphics g);
 }
