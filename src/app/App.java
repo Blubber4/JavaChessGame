@@ -94,23 +94,6 @@ public class App extends JPanel {
 		board.setSize(WIDTH, HEIGHT);
 		//content.setBackground(Color.black);
 		*/
-
-		JPanel panel = new JPanel();
-		panel.add(button);
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(panel);
-		frame.pack();
-		frame.setLocation(500, 500);
-		frame.setVisible(true);
-
-		/*
-		 * JFrame board = new JFrame("Chess"); board.setMinimumSize(new
-		 * Dimension(720,480));
-		 * board.setBorder(BorderFactory.createLoweredBevelBorder()); content =
-		 * getContentPane(); board.setSize(WIDTH, HEIGHT);
-		 * content.setBackground(Color.black);
-		 */
 	}
 
 }

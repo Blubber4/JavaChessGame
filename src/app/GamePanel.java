@@ -62,32 +62,12 @@ public class GamePanel extends JPanel {
     {
       gameObject.start();
     }
-
-    public GamePanel() {
-        initPanel(DEF_WIDTH, DEF_HEIGHT);
-    }
+  }
 
   private void drawBoard(Graphics g)
   {
 	  board.draw(g);
   }
-
-    public void add(GameObject gameObject) {
-        gameObjects.add(gameObject);
-    }
-
-    private void drawBoard(Graphics g) {
-        int blockSizeX = this.getSize().width / 8;
-        int blockSizeY = this.getSize().height / 8;
-        for (int pos = 0; pos < 8 * 8; pos++) {
-            int x = (pos % 8) * blockSizeX;
-            int y = (pos / 8) * blockSizeY;
-            int offset = (pos % 16) < 8 ? 0 : 1;
-            Color color = (pos + offset) % 2 == 0 ? Color.WHITE : Color.black;
-            g.setColor(color);
-            g.fillRect(x, y, blockSizeX, blockSizeY);
-        }
-    }
 
     /* returns a list of all clickable objects that contain point p */
     public List<IClickable> getIntersections(Point p) {
