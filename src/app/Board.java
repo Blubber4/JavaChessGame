@@ -24,7 +24,7 @@ public class Board extends JComponent {
 
     public void createPieces() { // clears the board and creates pieces for a new game
         deselect();
-        Rook whiteRook = new Rook("WhiteRook", "WhiteRook.png", PieceColor.WHITE);
+        Rook whiteRook = new Rook("WhiteRook", "WhiteRook.png", ChessPiece.PieceColor.WHITE);
         whiteRook.setlocation(new Point(1, 0));
         allPieces.add(whiteRook);
     }
