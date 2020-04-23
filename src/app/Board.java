@@ -56,6 +56,16 @@ public class Board extends JComponent {
         chessPiece = new Bishop(PieceColor.WHITE);
         chessPiece.setlocation(new Point(5, 0));
         allPieces.add(chessPiece);
+
+        for (int i = 0; i < 8; i++) {
+            chessPiece = new Pawn(PieceColor.WHITE);
+            chessPiece.setlocation(new Point(i, 1));
+            allPieces.add(chessPiece);
+        }
+
+        chessPiece = new King(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(3, 7));
+        allPieces.add(chessPiece);
     }
 
     public void setPiece(ChessPiece p) // add a piece to the board
