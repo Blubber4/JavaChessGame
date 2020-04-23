@@ -46,10 +46,12 @@ public class Board extends JComponent {
 
     public void select(int x, int y) // Function to mark a cell indicating it's selection
     {
-        // call deselect
-        // if there is a piece at point x,y
-        // select that piece
-        // call setPossibleMoves
+    	deselect();
+    	ChessPiece clicked = getpiece(x, y);
+    	if(clicked != null) {
+    		this.selected = clicked;
+    		this.setPossibleMoves(clicked);
+    	}
     }
 
     public void deselect() // Function to delselect the cell
@@ -71,6 +73,21 @@ public class Board extends JComponent {
 
     private void setPossibleMoves(ChessPiece p) {
         // fills the possibleMoves array for the selected piece
+    	ArrayList<Point> pMoves = p.possiblemoves;
+    	Point pLoc = p.getlocation();
+    	for(Point move : pMoves) {
+    		Point attemptedMove = new Point(move.x + pLoc.x, move.y + pLoc.y);
+    		if(onBoard(attemptedMove)) {
+    			this.possibleMoves.add(attemptedMove);
+    		}
+    	}
+    }
+    
+    private boolean onBoard(Point p) {
+    	if(p.x < 0 || p.y < 0 || p.x > 7|| p.y > 7) {
+    		return false;
+    	}
+    	return true;
     }
     
     private void moveSelected(Point p) {
@@ -87,10 +104,7 @@ public class Board extends JComponent {
         Point p = e.getPoint();
         Point scaledP = new Point(p.x / 75, p.y / 75); // this is scaled to board position
         if(selected == null) {
-        	ChessPiece clicked = getpiece(scaledP.x, scaledP.y);
-        	if(clicked != null) {
-        		this.selected = clicked;
-        	}
+        	select(scaledP.x, scaledP.y);
         }
         // if not selected and there is a piece there
         	// select that piece
@@ -99,7 +113,6 @@ public class Board extends JComponent {
         		moveSelected(scaledP);
         		deselect();
         	} else {
-        		moveSelected(scaledP); // this is for testing
         		deselect();
         	}
         }
@@ -143,7 +156,7 @@ public class Board extends JComponent {
         // highlight possible moves in blue
         g.setColor(Color.blue);
         for (int i = 0; i < possibleMoves.size(); i++) {
-            g.drawRect(possibleMoves.get(i).x * 75, possibleMoves.get(i).y, 75, 75);
+            g.fillRect(possibleMoves.get(i).x * 75, possibleMoves.get(i).y * 75, 75, 75);
         }
         // draw all pieces
         for (int i = 0; i < allPieces.size(); i++) {
