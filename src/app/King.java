@@ -1,24 +1,24 @@
 package app;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class King extends ChessPiece {
-    // config params
-    protected final int width = 75;
-    protected final int height = 75;
-
-    public King(String id, String filename, PieceColor color) {
-        super(id, filename, color);
-        this.image = scaleImage(image, width, height);
-
+    public King(PieceColor color) {
+        super("King.png", color);
     }
 
-    // Move Function for King Overridden from Pieces
-    public ArrayList<Board> move(Board state[][], int x, int y) {
-
-        // King can move only one step. So all the adjacent 8 cells have been
-        // considered.
-
+    protected ArrayList<Point> generatePossibleMoves() {
+        ArrayList<Point> moves = new ArrayList<Point>();
+        moves.add(new Point(0, 1));
+        moves.add(new Point(1, 0));
+        moves.add(new Point(1, 1));
+        moves.add(new Point(0, -1));
+        moves.add(new Point(-1, 0));
+        moves.add(new Point(-1, -1));
+        moves.add(new Point(1, -1));
+        moves.add(new Point(-1, 1));
+        return moves;
     }
 
     // Implement a function to check if king is under threat

@@ -24,9 +24,38 @@ public class Board extends JComponent {
 
     public void createPieces() { // clears the board and creates pieces for a new game
         deselect();
-        Rook whiteRook = new Rook("WhiteRook", "WhiteRook.png", PieceColor.WHITE);
-        whiteRook.setlocation(new Point(1, 0));
-        allPieces.add(whiteRook);
+        
+        ChessPiece chessPiece = new Rook(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(0, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Rook(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(7,0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new King(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(4, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Queen(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(3, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(1, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(6, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(2, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(5, 0));
+        allPieces.add(chessPiece);
     }
 
     public void setPiece(ChessPiece p) // add a piece to the board

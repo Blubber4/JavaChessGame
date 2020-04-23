@@ -1,6 +1,5 @@
 package app;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Image;
@@ -17,29 +16,30 @@ import java.util.ArrayList;
 abstract class ChessPiece implements Cloneable {
 
     // Member Variables
-    private String id;
     private Point location;
     private PieceColor color;
     protected Image image;
     protected ArrayList<Point> possiblemoves = new ArrayList<Point>();
 
-    // config param
+    // config params
     protected final int SCALE = 75;
+    protected int width = 75;
+    protected int height = 75;
 
     public enum PieceColor {
         WHITE, BLACK
     }
 
-    public ChessPiece(String id, String filename, PieceColor color)
+    public ChessPiece(String filename, PieceColor color)
     {
-        setId(id);
         setColor(color);
-        this.image = loadImage(filename);
-    }
-
-    // Id Setter for each piece
-    public void setId(String id) {
-        this.id = id;
+        if (color == PieceColor.BLACK) {
+            filename = "Black" + filename;
+        } else {
+            filename = "White" + filename;
+        }
+        this.image = scaleImage(loadImage(filename), height, width);
+        this.possiblemoves = generatePossibleMoves();
     }
 
     public void setlocation(Point p) {
@@ -53,11 +53,6 @@ abstract class ChessPiece implements Cloneable {
     
     public Point getlocation() {
         return location;
-    }
-
-    // Id getter
-    public String getId() {
-        return id;
     }
 
     // Color Getter
@@ -78,8 +73,14 @@ abstract class ChessPiece implements Cloneable {
     }
 
     public Image scaleImage(Image image, int width, int height) {
+        this.width = width;
+        this.height = height;
         return image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
     }
 
-    public abstract void draw(Graphics g);
+    public void draw(Graphics g) {
+        g.drawImage(this.image, getlocation().x * SCALE, getlocation().y * SCALE, null);
+    }
+
+    protected abstract ArrayList<Point> generatePossibleMoves();
 }

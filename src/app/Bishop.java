@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -9,20 +10,21 @@ import java.util.ArrayList;
  */
 public class Bishop extends ChessPiece {
 
-    public Bishop(final String i, final String p, final int c) {
-        setId(i);
-        setPath(p);
-        setColor(c);
+    public Bishop(PieceColor color) {
+        super("Bishop.png", color);
     }
 
     // Move function is defined. It returns a list of all the possible destinations
     // of a Bishop
     // The basic principle of Bishop Movement on chess board has been implemented
-    public ArrayList<Board> move(final Board state[][], final int x, final int y) {
-        // Bishop can Move diagonally in all 4 direction (NW,NE,SW,SE)
-        // This function defines that logic
-        possiblemoves.clear();
-        // add Bishop moves here
-
+    protected ArrayList<Point> generatePossibleMoves() {
+        ArrayList<Point> moves = new ArrayList<Point>();
+        for (int i = 1; i < 8; i++) {
+            moves.add(new Point(i, i));
+            moves.add(new Point(-1 * i, -1 * i));
+            moves.add(new Point(i, -1 * i));
+            moves.add(new Point(-1 * i, i));
+        }
+        return moves;
     }
 }
