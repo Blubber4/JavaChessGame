@@ -34,11 +34,11 @@ public class Board extends JComponent {
         allPieces.add(chessPiece);
 
         chessPiece = new King(PieceColor.WHITE);
-        chessPiece.setlocation(new Point(4, 0));
+        chessPiece.setlocation(new Point(3, 0));
         allPieces.add(chessPiece);
 
         chessPiece = new Queen(PieceColor.WHITE);
-        chessPiece.setlocation(new Point(3, 0));
+        chessPiece.setlocation(new Point(4, 0));
         allPieces.add(chessPiece);
 
         chessPiece = new Knight(PieceColor.WHITE);
@@ -63,9 +63,43 @@ public class Board extends JComponent {
             allPieces.add(chessPiece);
         }
 
+        chessPiece = new Rook(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(0, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Rook(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(7, 7));
+        allPieces.add(chessPiece);
+
         chessPiece = new King(PieceColor.BLACK);
         chessPiece.setlocation(new Point(3, 7));
         allPieces.add(chessPiece);
+
+        chessPiece = new Queen(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(4, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(1, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(6, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(2, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(5, 7));
+        allPieces.add(chessPiece);
+
+        for (int i = 0; i < 8; i++) {
+            chessPiece = new Pawn(PieceColor.BLACK);
+            chessPiece.setlocation(new Point(i, 6));
+            allPieces.add(chessPiece);
+        }
     }
 
     public void setPiece(ChessPiece p) // add a piece to the board
