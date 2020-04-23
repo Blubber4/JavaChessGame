@@ -72,6 +72,16 @@ public class Board extends JComponent {
     private void setPossibleMoves(ChessPiece p) {
         // fills the possibleMoves array for the selected piece
     }
+    
+    private void moveSelected(Point p) {
+    	// move the selected piece to point p
+    	ChessPiece capture = getpiece(p.x, p.y);
+    	if(capture != null) {
+    		allPieces.remove(capture);
+    	}
+    	selected.setlocation(p);
+    	deselect();
+    }
 
     public void mouseClicked(MouseEvent e) {
         Point p = e.getPoint();
@@ -84,11 +94,30 @@ public class Board extends JComponent {
         }
         // if not selected and there is a piece there
         	// select that piece
+        else {
+        	if(possibleMoves.contains(scaledP)) {
+        		moveSelected(scaledP);
+        		deselect();
+        	} else {
+        		moveSelected(scaledP); // this is for testing
+        		deselect();
+        	}
+        }
         // if selected and scaledP is a possibleMove
         	// move piece
         // if selected and scaledP is not a possibleMove
         	// deselect
-        this.repaint(); // this is not working
+        this.callRepaint();
+    }
+    
+    private void callRepaint() {
+    	SwingUtilities.invokeLater(new Runnable()
+    	{
+    	    public void run()
+    	    {
+    	        repaint();
+    	    }
+    	}); 
     }
 
     public void update() {
@@ -109,7 +138,7 @@ public class Board extends JComponent {
         // highlight the selected piece
         if (this.selected != null) {
             g.setColor(Color.yellow);
-            g.drawRect(selected.getlocation().x * 75, selected.getlocation().y * 75, 75, 75);
+            g.fillRect(selected.getlocation().x * 75, selected.getlocation().y * 75, 75, 75);
         }
         // highlight possible moves in blue
         g.setColor(Color.blue);

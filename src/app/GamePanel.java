@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements MouseListener {
                 repaint();
             }
         });
-        // timer.start();
+        timer.start();
     }
 
     public void startAll() {
