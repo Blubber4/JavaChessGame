@@ -11,6 +11,9 @@ import java.util.ArrayList;
  */
 
 public class Rook extends ChessPiece {
+    // config params
+    protected final int width = 75;
+    protected final int height = 75;
 
     public Rook(String id, String filename, PieceColor color) {
         super(id, filename, color);

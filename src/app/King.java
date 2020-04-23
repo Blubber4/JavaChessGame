@@ -3,30 +3,14 @@ package app;
 import java.util.ArrayList;
 
 public class King extends ChessPiece {
+    // config params
+    protected final int width = 75;
+    protected final int height = 75;
 
-    public King(String i, String p, int c, int x, int y) {
-        setx(x);
-        sety(y);
-        setId(i);
-        setPath(p);
-        setColor(c);
+    public King(String id, String filename, PieceColor color) {
+        super(id, filename, color);
+        this.image = scaleImage(image, width, height);
 
-    }
-
-    public void setx(int x) {
-        this.x = x;
-    }
-
-    public void sety(int y) {
-        this.y = y;
-    }
-
-    public int getx() {
-        return x;
-    }
-
-    public int gety() {
-        return y;
     }
 
     // Move Function for King Overridden from Pieces

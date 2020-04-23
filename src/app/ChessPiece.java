@@ -7,12 +7,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
-/**
+ /**
  * This is the ChessPiece Class. It is an abstract class from which all the
  * actual pieces are inherited. It defines all the function common to all the
  * pieces The move() function an abstract function that has to be overridden in
  * all the inherited class
- *
  */
 
 abstract class ChessPiece implements Cloneable {
@@ -23,10 +22,6 @@ abstract class ChessPiece implements Cloneable {
     private PieceColor color;
     protected Image image;
     protected ArrayList<Point> possiblemoves = new ArrayList<Point>();
-    
-    // config params
-    protected final int width = 75;
-    protected final int height = 75;
 
     public enum PieceColor {
         WHITE, BLACK
