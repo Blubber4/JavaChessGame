@@ -33,6 +33,6 @@ public class Rook extends ChessPiece {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(this.image, getlocation().x, getlocation().y, null);
+        g.drawImage(this.image, getlocation().x*SCALE, getlocation().y*SCALE, null);
     }
 }

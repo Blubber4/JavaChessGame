@@ -23,6 +23,9 @@ abstract class ChessPiece implements Cloneable {
     protected Image image;
     protected ArrayList<Point> possiblemoves = new ArrayList<Point>();
 
+    // config param
+    protected final int SCALE = 75;
+
     public enum PieceColor {
         WHITE, BLACK
     }
