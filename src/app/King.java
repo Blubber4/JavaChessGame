@@ -1,40 +1,24 @@
 package app;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class King extends ChessPiece {
-
-    public King(String i, String p, int c, int x, int y) {
-        setx(x);
-        sety(y);
-        setId(i);
-        setPath(p);
-        setColor(c);
-
+    public King(PieceColor color) {
+        super("King.png", color);
     }
 
-    public void setx(int x) {
-        this.x = x;
-    }
-
-    public void sety(int y) {
-        this.y = y;
-    }
-
-    public int getx() {
-        return x;
-    }
-
-    public int gety() {
-        return y;
-    }
-
-    // Move Function for King Overridden from Pieces
-    public ArrayList<Board> move(Board state[][], int x, int y) {
-
-        // King can move only one step. So all the adjacent 8 cells have been
-        // considered.
-
+    protected ArrayList<Point> generatePossibleMoves() {
+        ArrayList<Point> moves = new ArrayList<Point>();
+        moves.add(new Point(0, 1));
+        moves.add(new Point(1, 0));
+        moves.add(new Point(1, 1));
+        moves.add(new Point(0, -1));
+        moves.add(new Point(-1, 0));
+        moves.add(new Point(-1, -1));
+        moves.add(new Point(1, -1));
+        moves.add(new Point(-1, 1));
+        return moves;
     }
 
     // Implement a function to check if king is under threat

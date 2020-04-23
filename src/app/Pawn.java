@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -9,19 +10,14 @@ import java.util.ArrayList;
 
 public class Pawn extends ChessPiece {
 
-    public Pawn(String i, String p, int c) {
-        setId(i);
-        setPath(p);
-        setColor(c);
+    public Pawn(PieceColor color) {
+        super("Pawn.png", color);
     }
 
     // Move Function Overridden
-    public ArrayList<Board> move(Board state[][], int x, int y) {
-        // Pawn can move only one step except the first chance when it may move 2 steps
-        // It can move in a diagonal fashion only for attacking a piece of opposite
-        // color
-        // It cannot move backward or move forward to attact a piece
+    protected ArrayList<Point> generatePossibleMoves() {
+        ArrayList<Point> moves = new ArrayList<Point>();
 
-        possiblemoves.clear();
+        return moves;
     }
 }

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import app.ChessPiece.PieceColor;
+
 public class Board extends JComponent {
     ArrayList<ChessPiece> allPieces = new ArrayList<ChessPiece>(); // all chess pieces on the board
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
@@ -22,9 +24,82 @@ public class Board extends JComponent {
 
     public void createPieces() { // clears the board and creates pieces for a new game
         deselect();
-        Rook whiteRook = new Rook("a", "b", 1);
-        whiteRook.setlocation(new Point(1, 0));
-        allPieces.add(whiteRook);
+        
+        ChessPiece chessPiece = new Rook(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(0, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Rook(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(7,0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new King(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(3, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Queen(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(4, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(1, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(6, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(2, 0));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.WHITE);
+        chessPiece.setlocation(new Point(5, 0));
+        allPieces.add(chessPiece);
+
+        for (int i = 0; i < 8; i++) {
+            chessPiece = new Pawn(PieceColor.WHITE);
+            chessPiece.setlocation(new Point(i, 1));
+            allPieces.add(chessPiece);
+        }
+
+        chessPiece = new Rook(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(0, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Rook(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(7, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new King(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(3, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Queen(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(4, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(1, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Knight(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(6, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(2, 7));
+        allPieces.add(chessPiece);
+
+        chessPiece = new Bishop(PieceColor.BLACK);
+        chessPiece.setlocation(new Point(5, 7));
+        allPieces.add(chessPiece);
+
+        for (int i = 0; i < 8; i++) {
+            chessPiece = new Pawn(PieceColor.BLACK);
+            chessPiece.setlocation(new Point(i, 6));
+            allPieces.add(chessPiece);
+        }
     }
 
     public void setPiece(ChessPiece p) // add a piece to the board
@@ -46,10 +121,12 @@ public class Board extends JComponent {
 
     public void select(int x, int y) // Function to mark a cell indicating it's selection
     {
-        // call deselect
-        // if there is a piece at point x,y
-        // select that piece
-        // call setPossibleMoves
+    	deselect();
+    	ChessPiece clicked = getpiece(x, y);
+    	if(clicked != null) {
+    		this.selected = clicked;
+    		this.setPossibleMoves(clicked);
+    	}
     }
 
     public void deselect() // Function to delselect the cell
@@ -71,6 +148,21 @@ public class Board extends JComponent {
 
     private void setPossibleMoves(ChessPiece p) {
         // fills the possibleMoves array for the selected piece
+    	ArrayList<Point> pMoves = p.possiblemoves;
+    	Point pLoc = p.getlocation();
+    	for(Point move : pMoves) {
+    		Point attemptedMove = new Point(move.x + pLoc.x, move.y + pLoc.y);
+    		if(onBoard(attemptedMove)) {
+    			this.possibleMoves.add(attemptedMove);
+    		}
+    	}
+    }
+    
+    private boolean onBoard(Point p) {
+    	if(p.x < 0 || p.y < 0 || p.x > 7|| p.y > 7) {
+    		return false;
+    	}
+    	return true;
     }
     
     private void moveSelected(Point p) {
@@ -87,10 +179,7 @@ public class Board extends JComponent {
         Point p = e.getPoint();
         Point scaledP = new Point(p.x / 75, p.y / 75); // this is scaled to board position
         if(selected == null) {
-        	ChessPiece clicked = getpiece(scaledP.x, scaledP.y);
-        	if(clicked != null) {
-        		this.selected = clicked;
-        	}
+        	select(scaledP.x, scaledP.y);
         }
         // if not selected and there is a piece there
         	// select that piece
@@ -99,7 +188,6 @@ public class Board extends JComponent {
         		moveSelected(scaledP);
         		deselect();
         	} else {
-        		moveSelected(scaledP); // this is for testing
         		deselect();
         	}
         }
@@ -143,7 +231,7 @@ public class Board extends JComponent {
         // highlight possible moves in blue
         g.setColor(Color.blue);
         for (int i = 0; i < possibleMoves.size(); i++) {
-            g.drawRect(possibleMoves.get(i).x * 75, possibleMoves.get(i).y, 75, 75);
+            g.fillRect(possibleMoves.get(i).x * 75, possibleMoves.get(i).y * 75, 75, 75);
         }
         // draw all pieces
         for (int i = 0; i < allPieces.size(); i++) {

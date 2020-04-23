@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -9,23 +10,25 @@ import java.util.ArrayList;
 
 public class Queen extends ChessPiece {
 
-    public Queen(String i, String p, int c) {
-        setId(i);
-        setPath(p);
-        setColor(c);
+    public Queen(PieceColor color) {
+        super("Queen.png", color);
     }
 
     // Move Function Defined
-    public ArrayList<Board> move(Board state[][], int x, int y) {
-        // Queen has most number of possible moves
-        // Queen can move any number of steps in all 8 direction
-        // The possible moves of queen is a combination of Rook and Bishop
-        possiblemoves.clear();
-
-        // Have to check for possible moves in vertical direction
-
-        // Have to check for possible moves in horizontal Direction
-
-        // Have to check for possible moves in diagonal direction
+    protected ArrayList<Point> generatePossibleMoves() {
+        ArrayList<Point> moves = new ArrayList<Point>();
+        for (int i = 1; i < 8; i++) {
+            moves.add(new Point(0, i));
+            moves.add(new Point(i, 0));
+            moves.add(new Point(-1 * i, 0));
+            moves.add(new Point(0, -1 * i));
+        }
+        for (int i = 1; i < 8; i++) {
+            moves.add(new Point(i, i));
+            moves.add(new Point(-1 * i, -1 * i));
+            moves.add(new Point(i, -1 * i));
+            moves.add(new Point(-1 * i, i));
+        }
+        return moves;
     }
 }

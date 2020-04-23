@@ -1,62 +1,62 @@
 package app;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
-/**
+ /**
  * This is the ChessPiece Class. It is an abstract class from which all the
  * actual pieces are inherited. It defines all the function common to all the
  * pieces The move() function an abstract function that has to be overridden in
  * all the inherited class
- *
  */
 
 abstract class ChessPiece implements Cloneable {
 
     // Member Variables
-    private int color;
-    private String id = null;
-    private String path;
-    protected ArrayList<Point> possiblemoves = new ArrayList<Point>(); // Protected (access from child classes)
-    private Point location = null;
+    private Point location;
+    private PieceColor color;
+    protected Image image;
+    protected ArrayList<Point> possiblemoves = new ArrayList<Point>();
 
-    // Id Setter for each piece
-    public void setId(String id) {
-        this.id = id;
+    // config params
+    protected final int SCALE = 75;
+    protected int width = 75;
+    protected int height = 75;
+
+    public enum PieceColor {
+        WHITE, BLACK
     }
 
-    public Point getlocation() {
-        return location;
+    public ChessPiece(String filename, PieceColor color)
+    {
+        setColor(color);
+        if (color == PieceColor.BLACK) {
+            filename = "Black" + filename;
+        } else {
+            filename = "White" + filename;
+        }
+        this.image = scaleImage(loadImage(filename), height, width);
+        this.possiblemoves = generatePossibleMoves();
     }
 
     public void setlocation(Point p) {
         this.location = p;
     }
 
-    // Path Setter
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     // Color Setter
-    public void setColor(int c) {
-        this.color = c;
+    public void setColor(PieceColor color) {
+        this.color = color;
     }
-
-    // Path getter
-    public String getPath() {
-        return path;
-    }
-
-    // Id getter
-    public String getId() {
-        return id;
+    
+    public Point getlocation() {
+        return location;
     }
 
     // Color Getter
-    public int getcolor() {
+    public PieceColor getColor() {
         return this.color;
     }
 
@@ -66,5 +66,21 @@ abstract class ChessPiece implements Cloneable {
         return (ChessPiece) this.clone();
     }
 
-    public abstract void draw(Graphics g);
+    /* loads image with filename in the project's resources folder */
+    public Image loadImage(String filename) {
+        Image image = Toolkit.getDefaultToolkit().getImage("resources/" + filename);
+        return image;
+    }
+
+    public Image scaleImage(Image image, int width, int height) {
+        this.width = width;
+        this.height = height;
+        return image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+    }
+
+    public void draw(Graphics g) {
+        g.drawImage(this.image, getlocation().x * SCALE, getlocation().y * SCALE, null);
+    }
+
+    protected abstract ArrayList<Point> generatePossibleMoves();
 }
