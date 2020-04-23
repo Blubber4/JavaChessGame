@@ -6,11 +6,7 @@ import javax.swing.plaf.DimensionUIResource;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
+
 
 /**
  * This is the Main Class of our project. All GUI Elements are declared,
@@ -31,7 +27,7 @@ public class App extends JPanel {
 	private JButton startButton, cancelButton;
 	private JSplitPane split;
 	private JLabel titleLabel;
-	private Container mainDisplay;
+	//private Container mainDisplay;
 
 
 	// private ArrayList<Board> destinationlist = new ArrayList<Board>();
@@ -43,7 +39,7 @@ public class App extends JPanel {
 
 	public App() {
 
-		menuPanel();
+		//menuPanel();
 		initMainFrame();
 		mainTitlePanel();
 
