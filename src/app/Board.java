@@ -14,6 +14,7 @@ public class Board extends JComponent {
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
     ChessPiece selected; // null if no piece is selected
 
+    public boolean blackTurn = true;
     // instance vars
 
     public Board() {
@@ -24,6 +25,7 @@ public class Board extends JComponent {
 
     public void createPieces() { // clears the board and creates pieces for a new game
         deselect();
+<<<<<<< HEAD
         
         ChessPiece chessPiece = new Rook(PieceColor.WHITE);
         chessPiece.setlocation(new Point(0, 0));
@@ -100,6 +102,15 @@ public class Board extends JComponent {
             chessPiece.setlocation(new Point(i, 6));
             allPieces.add(chessPiece);
         }
+=======
+        allPieces = new ArrayList<ChessPiece>();
+        Rook whiteRook = new Rook("WhiteRook", "WhiteRook.png", ChessPiece.PieceColor.WHITE);
+        whiteRook.setlocation(new Point(1, 0));
+        allPieces.add(whiteRook);
+        Rook blackRook = new Rook("BlackRook", "BlackRook.png", ChessPiece.PieceColor.BLACK);
+        blackRook.setlocation(new Point(1, 1));
+        allPieces.add(blackRook);
+>>>>>>> master
     }
 
     public void setPiece(ChessPiece p) // add a piece to the board
@@ -123,7 +134,7 @@ public class Board extends JComponent {
     {
     	deselect();
     	ChessPiece clicked = getpiece(x, y);
-    	if(clicked != null) {
+    	if(clicked != null && (PieceColor.BLACK == clicked.getColor()) == blackTurn) {
     		this.selected = clicked;
     		this.setPossibleMoves(clicked);
     	}
@@ -145,8 +156,16 @@ public class Board extends JComponent {
     {
         this.possibleMoves = new ArrayList<Point>();
     }
+    
+    private void setPossibleMovesPawn(ChessPiece p) {
+    	
+    }
 
     private void setPossibleMoves(ChessPiece p) {
+    	if(p instanceof Pawn) {
+    		setPossibleMovesPawn(p); // pawns are weird
+    		return;
+    	}
         // fills the possibleMoves array for the selected piece
     	ArrayList<Point> pMoves = p.possiblemoves;
     	Point pLoc = p.getlocation();
@@ -173,6 +192,7 @@ public class Board extends JComponent {
     	}
     	selected.setlocation(p);
     	deselect();
+    	this.blackTurn = !this.blackTurn;
     }
 
     public void mouseClicked(MouseEvent e) {
