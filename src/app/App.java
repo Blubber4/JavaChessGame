@@ -28,7 +28,7 @@ public class App extends JPanel {
 	private JFrame mainFrame, gameFrame, titleFrame;
 	private JPanel titlePanel, controlPanel, bottomMenuPanel;
 	private GamePanel gamePanel = new GamePanel();
-	private JButton startButton;
+	private JButton startButton, cancelButton;
 	private JSplitPane split;
 	private JLabel titleLabel;
 	private Container mainDisplay;
@@ -42,40 +42,65 @@ public class App extends JPanel {
 
 
 	public App() {
+
+		menuPanel();
+		initMainFrame();
+		mainTitlePanel();
+
+		gameFrame = new JFrame("Chess Game");
+		gameFrame.setSize(WIDTH, HEIGHT);
+
+
+	}
+
+	public void menuPanel(){
+
+
+	}
+
+	public void mainTitlePanel(){
+		titlePanel = new JPanel();
+		titleLabel = new JLabel("Welcome to Chess!");
+			titleLabel.setFont(new Font("SERIF", Font.BOLD, 30));
+		titlePanel.setBorder(new LineBorder(Color.BLACK, 3));
+		titlePanel.setBackground(Color.YELLOW);
+		titlePanel.add(titleLabel);
+		mainFrame.add(titlePanel, BorderLayout.NORTH);
+
+
+
+
+	}
+ 
+	public void initMainFrame(){
 		//MAIN CONTENT FRAME
 		mainFrame = new JFrame("Chess Game");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new DimensionUIResource(WIDTH, HEIGHT));
-		mainFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
-		mainFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
+		mainFrame.setSize(300,200);
 		mainFrame.setVisible(true);
-		mainFrame.setResizable(true);
+		mainFrame.setResizable(false);
 		mainFrame.setLocationRelativeTo(null);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gameFrame = new JFrame("Chess Game");
 
-		startButton = new JButton("New Game");
+		cancelButton = new JButton("Cancel");
+		startButton = new JButton("New Game"); 
+		bottomMenuPanel = new JPanel(new GridLayout(1,2)); 
+		bottomMenuPanel.setBackground(Color.WHITE);
+		//bottomMenuPanel.setLayout(new BorderLayout());
 		bottomMenuPanel.add(startButton);
-		bottomMenuPanel.setBackground(Color.RED);
-		//startButton.setBounds(100,100,100,50);
-		mainFrame.getContentPane().add(bottomMenuPanel, BorderLayout.SOUTH);
-
+		bottomMenuPanel.add(cancelButton);
 		startButton.addActionListener(new START());
+		cancelButton.addActionListener(new CANCEL());
 
-		titleLabel = new JLabel("Welcome to Chess!");
-			titleLabel.setFont(new Font("SERIF", Font.BOLD, 30));
-			titlePanel.add(titleLabel);
-		
-		titlePanel.setBorder(new LineBorder(Color.BLACK, 3));
-		titlePanel.setBackground(Color.GREEN);
+		mainFrame.add(bottomMenuPanel); 
 
-		mainFrame.getContentPane().add(titlePanel, BorderLayout.NORTH);
 
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-		mainFrame.setResizable(true);
-		mainFrame.setLocationRelativeTo(null);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+
+	class CANCEL implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			System.exit(0);
+		}
 	}
 
 	class START implements ActionListener{
