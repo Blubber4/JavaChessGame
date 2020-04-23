@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import app.ChessPiece.PieceColor;
+
 public class Board extends JComponent {
     ArrayList<ChessPiece> allPieces = new ArrayList<ChessPiece>(); // all chess pieces on the board
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
@@ -22,7 +24,7 @@ public class Board extends JComponent {
 
     public void createPieces() { // clears the board and creates pieces for a new game
         deselect();
-        Rook whiteRook = new Rook("a", "b", 1);
+        Rook whiteRook = new Rook("WhiteRook", "WhiteRook.png", PieceColor.WHITE);
         whiteRook.setlocation(new Point(1, 0));
         allPieces.add(whiteRook);
     }

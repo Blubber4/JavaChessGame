@@ -3,6 +3,8 @@ package app;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 /**
@@ -16,38 +18,43 @@ import java.util.ArrayList;
 abstract class ChessPiece implements Cloneable {
 
     // Member Variables
-    private int color;
-    private String id = null;
-    private String path;
-    protected ArrayList<Point> possiblemoves = new ArrayList<Point>(); // Protected (access from child classes)
-    private Point location = null;
+    private String id;
+    private Point location;
+    private PieceColor color;
+    protected Image image;
+    protected ArrayList<Point> possiblemoves = new ArrayList<Point>();
+    
+    // config params
+    protected final int width = 75;
+    protected final int height = 75;
+
+    public enum PieceColor {
+        WHITE, BLACK
+    }
+
+    public ChessPiece(String id, String filename, PieceColor color)
+    {
+        setId(id);
+        setColor(color);
+        this.image = loadImage(filename);
+    }
 
     // Id Setter for each piece
     public void setId(String id) {
         this.id = id;
     }
 
-    public Point getlocation() {
-        return location;
-    }
-
     public void setlocation(Point p) {
         this.location = p;
     }
 
-    // Path Setter
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     // Color Setter
-    public void setColor(int c) {
-        this.color = c;
+    public void setColor(PieceColor color) {
+        this.color = color;
     }
-
-    // Path getter
-    public String getPath() {
-        return path;
+    
+    public Point getlocation() {
+        return location;
     }
 
     // Id getter
@@ -56,7 +63,7 @@ abstract class ChessPiece implements Cloneable {
     }
 
     // Color Getter
-    public int getcolor() {
+    public PieceColor getColor() {
         return this.color;
     }
 
@@ -64,6 +71,16 @@ abstract class ChessPiece implements Cloneable {
     // same variable value but different reference
     public ChessPiece getcopy() throws CloneNotSupportedException {
         return (ChessPiece) this.clone();
+    }
+
+    /* loads image with filename in the project's resources folder */
+    public Image loadImage(String filename) {
+        Image image = Toolkit.getDefaultToolkit().getImage("resources/" + filename);
+        return image;
+    }
+
+    public Image scaleImage(Image image, int width, int height) {
+        return image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
     }
 
     public abstract void draw(Graphics g);

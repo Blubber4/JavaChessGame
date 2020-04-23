@@ -12,11 +12,10 @@ import java.util.ArrayList;
 
 public class Rook extends ChessPiece {
 
-    public Rook(String i, String p, int c) {
-        setId(i);
-        setPath(p);
-        setColor(c);
+    public Rook(String id, String filename, PieceColor color) {
+        super(id, filename, color);
         this.possiblemoves = generatePossibleMoves();
+        this.image = scaleImage(image, width, height);
     }
 
     private ArrayList<Point> generatePossibleMoves() {
@@ -31,9 +30,6 @@ public class Rook extends ChessPiece {
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.red);
-        // the "* 75" is to scale the board position to the pixel
-        // it should not be hard coded like this
-        g.fillOval(this.getlocation().x * 75, this.getlocation().y * 75, 75, 75);
+        g.drawImage(this.image, getlocation().x, getlocation().y, null);
     }
 }
