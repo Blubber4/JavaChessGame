@@ -77,8 +77,16 @@ public class Board extends JComponent {
     {
         this.possibleMoves = new ArrayList<Point>();
     }
+    
+    private void setPossibleMovesPawn(ChessPiece p) {
+    	
+    }
 
     private void setPossibleMoves(ChessPiece p) {
+    	if(p instanceof Pawn) {
+    		setPossibleMovesPawn(p); // pawns are weird
+    		return;
+    	}
         // fills the possibleMoves array for the selected piece
     	ArrayList<Point> pMoves = p.possiblemoves;
     	Point pLoc = p.getlocation();
