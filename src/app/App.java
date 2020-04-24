@@ -32,7 +32,6 @@ public class App extends JPanel {
 		new App();
 	}
 
-
 	public App() {
 		//MAIN CONTENT FRAME
 		mainFrame = new JFrame("Chess Game");
@@ -86,7 +85,7 @@ public class App extends JPanel {
 		restartPanel.setBackground(Color.RED);
 		restartPanel.add(yesButton); 
 		restartPanel.add(noButton);
-		
+
 		//restart 
 		yesButton.addActionListener(new ActionListener(){
 			@Override

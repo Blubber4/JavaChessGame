@@ -20,7 +20,7 @@ public class Board extends JComponent {
     public Board() {
         // initialize a new board
         super();
-        this.setSize(600, 600); // I don't think this is drawing right
+        this.setSize(600, 600); // I don't think this is drawing right (It isnt't but please dont change it, it will ruin the Main GUI - Tony)
     }
 
     public void createPieces() { // clears the board and creates pieces for a new game
