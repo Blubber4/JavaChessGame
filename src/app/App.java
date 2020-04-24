@@ -1,11 +1,15 @@
 package app;
 
 import javax.swing.*;
+import java.io.File;
 import javax.swing.border.*;
 import javax.swing.plaf.DimensionUIResource;
 
+import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.Toolkit;
+
 
 /**
  * This is the Main Class of our project. All GUI Elements are declared,
@@ -25,7 +29,9 @@ public class App extends JPanel {
 	private GamePanel gamePanel = new GamePanel(); //function to call the board
 	private JButton startButton, cancelButton, restartButton, yesButton, noButton, popupButton;
 	private JSplitPane gameSplit, controlSplit;
-	private JLabel titleLabel, whitePlayer, blackPlayer;
+	private JLabel titleLabel, whitePlayer, blackPlayer, winnerLabel, losingLabel;
+	private Time timer;
+
 	// private ArrayList<Board> destinationlist = new ArrayList<Board>();
 
 	public static void main(String[] args) {
@@ -58,6 +64,7 @@ public class App extends JPanel {
 		startButton.addActionListener(new START());
 		cancelButton.addActionListener(new CANCEL());
 		mainFrame.add(bottomMenuPanel); 
+
 	}
 
 	//Cancel Button Action
