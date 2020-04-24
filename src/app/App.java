@@ -6,8 +6,6 @@ import javax.swing.plaf.DimensionUIResource;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.time.temporal.Temporal;
-
 
 /**
  * This is the Main Class of our project. All GUI Elements are declared,
@@ -22,8 +20,8 @@ public class App extends JPanel {
 	private final int HEIGHT = 650;
 	private final int WIDTH = 1000;
 
-	private JFrame mainFrame, gameFrame, exitFrame;
-	private JPanel titlePanel, bottomMenuPanel, topMenuPanel, showPlayerPanel, exitPanel;
+	private JFrame mainFrame, gameFrame, exitFrame, winningFrame, losingFrame, restartFrame;
+	private JPanel titlePanel, bottomMenuPanel, topMenuPanel, showPlayerPanel, exitPanel, winningPanel, losingPanel, restartPanel;
 	private GamePanel gamePanel = new GamePanel(); //function to call the board
 	private JButton startButton, cancelButton, restartButton, yesButton, noButton, popupButton;
 	private JSplitPane gameSplit, controlSplit;
@@ -80,8 +78,34 @@ public class App extends JPanel {
 	//Restart game button Action
 	private class RESTART implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			gameFrame.dispose();
-			chessGameGUI();
+		restartFrame = new JFrame("Restart?");  
+		restartPanel = new JPanel(); 
+		yesButton = new JButton("Yes");
+		noButton = new JButton("No");
+		restartFrame.add(restartPanel);
+		restartPanel.setBackground(Color.RED);
+		restartPanel.add(yesButton); 
+		restartPanel.add(noButton);
+		
+		//restart 
+		yesButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				restartFrame.dispose();
+				chessGameGUI();
+				restartFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			}});
+
+		//close frame
+		noButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				restartFrame.dispose();
+				restartFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			}});
+			restartFrame.setLocationRelativeTo(null);
+			restartFrame.setSize(250,75);  
+			restartFrame.setVisible(true); 
 		}
 	}
 
@@ -108,6 +132,26 @@ public class App extends JPanel {
 		}
 	} 
 
+	private void winningScreen(){
+		winningFrame = new JFrame("WINNDER!");
+		winningPanel = new JPanel();
+		winningFrame.add(winningPanel);
+		winningPanel.setBackground(Color.GREEN);
+
+	}
+
+	private void losingScreen(){
+		losingFrame = new JFrame("LOSER!");
+		losingPanel = new JPanel();
+		losingFrame.add(losingPanel);
+
+	}
+
+	//placeholder, might or might not need this
+	private void gameOver(){
+
+	}
+
 	//function to host all board properties and control panel subclasses
 	public void chessGameGUI() {
 		//Main chess game frame
@@ -129,13 +173,14 @@ public class App extends JPanel {
 		topMenuPanel = new JPanel();
 		bottomMenuPanel = new JPanel();
 		showPlayerPanel  = new JPanel();
-
+		topMenuPanel.setBackground(Color.YELLOW);
+		bottomMenuPanel.setBackground(Color.YELLOW);
 		showPlayerPanel.add(whitePlayer);//testing player placement
 		topMenuPanel.add(showPlayerPanel);
-		bottomMenuPanel.add(blackPlayer); //testing, time placement holder
+		topMenuPanel.add(blackPlayer); //testing, time placement holder
 		controlSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topMenuPanel, bottomMenuPanel);
 		controlSplit.setOneTouchExpandable(true);
-		controlSplit.setDividerLocation(300);
+		controlSplit.setDividerLocation(550);
 
 		bottomMenuPanel.add(restartButton);
 		bottomMenuPanel.add(popupButton);
