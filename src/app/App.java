@@ -6,6 +6,7 @@ import javax.swing.plaf.DimensionUIResource;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.temporal.Temporal;
 
 
 /**
@@ -18,15 +19,15 @@ public class App extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	//config params for window
-	private final int HEIGHT = 800;
+	private final int HEIGHT = 650;
 	private final int WIDTH = 1000;
 
-	private JFrame mainFrame, gameFrame, titleFrame;
-	private JPanel titlePanel, controlPanel, bottomMenuPanel;
-	private GamePanel gamePanel = new GamePanel();
+	private JFrame mainFrame, gameFrame;
+	private JPanel titlePanel, bottomMenuPanel, topMenuPanel, showPlayerPanel;
+	private GamePanel gamePanel = new GamePanel(); //function to call the board
 	private JButton startButton, cancelButton;
-	private JSplitPane split;
-	private JLabel titleLabel;
+	private JSplitPane gameSplit, controlSplit;
+	private JLabel titleLabel, whitePlayer, blackPlayer;
 	//private Container mainDisplay;
 
 
@@ -38,37 +39,6 @@ public class App extends JPanel {
 
 
 	public App() {
-
-		//menuPanel();
-		initMainFrame();
-		mainTitlePanel();
-
-		gameFrame = new JFrame("Chess Game");
-		gameFrame.setSize(WIDTH, HEIGHT);
-
-
-	}
-
-	public void menuPanel(){
-
-
-	}
-
-	public void mainTitlePanel(){
-		titlePanel = new JPanel();
-		titleLabel = new JLabel("Welcome to Chess!");
-			titleLabel.setFont(new Font("SERIF", Font.BOLD, 30));
-		titlePanel.setBorder(new LineBorder(Color.BLACK, 3));
-		titlePanel.setBackground(Color.YELLOW);
-		titlePanel.add(titleLabel);
-		mainFrame.add(titlePanel, BorderLayout.NORTH);
-
-
-
-
-	}
- 
-	public void initMainFrame(){
 		//MAIN CONTENT FRAME
 		mainFrame = new JFrame("Chess Game");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,43 +47,69 @@ public class App extends JPanel {
 		mainFrame.setResizable(false);
 		mainFrame.setLocationRelativeTo(null);
 
+		titlePanel = new JPanel();
+		titleLabel = new JLabel("Welcome to Chess!");
+			titleLabel.setFont(new Font("SERIF", Font.BOLD, 30));
+		titlePanel.setBorder(new LineBorder(Color.BLACK, 3));
+		titlePanel.setBackground(Color.YELLOW);
+		titlePanel.add(titleLabel);
+		mainFrame.add(titlePanel, BorderLayout.NORTH);
+
 		cancelButton = new JButton("Cancel");
 		startButton = new JButton("New Game"); 
 		bottomMenuPanel = new JPanel(new GridLayout(1,2)); 
 		bottomMenuPanel.setBackground(Color.WHITE);
-		//bottomMenuPanel.setLayout(new BorderLayout());
 		bottomMenuPanel.add(startButton);
 		bottomMenuPanel.add(cancelButton);
 		startButton.addActionListener(new START());
 		cancelButton.addActionListener(new CANCEL());
-
 		mainFrame.add(bottomMenuPanel); 
-
-
-
 	}
 
+	//Cancel Button Action
 	class CANCEL implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			System.exit(0);
 		}
 	}
 
+	//New game button Action
 	class START implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
-		//GAME CONTENT FRAME
 		mainFrame.dispose();
-		gameFrame.setPreferredSize(new DimensionUIResource(WIDTH, HEIGHT));
-		gameFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
-		gameFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
-		gameFrame.add(gamePanel);
-		//split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,gameFrame, controlPanel);
-		gameFrame.setContentPane(gamePanel);
+		chessGameGUI();
+		}
+	}
+
+	//function to host all board properties and control panel subclasses
+	public void chessGameGUI() {
+		//Main chess game frame
+		gameFrame = new JFrame("Chess Game");
+		gameFrame.setSize(new DimensionUIResource(WIDTH, HEIGHT));
+		//gameFrame.setMinimumSize(new DimensionUIResource(WIDTH, HEIGHT));
+		//gameFrame.setMaximumSize(new DimensionUIResource(WIDTH, HEIGHT));
+
+		whitePlayer = new JLabel("White's Turn");
+		blackPlayer = new JLabel("Black's Turn");
+
+		topMenuPanel = new JPanel();
+		bottomMenuPanel = new JPanel();
+		showPlayerPanel  = new JPanel();
+
+		showPlayerPanel.add(whitePlayer);//testing player placement
+		topMenuPanel.add(showPlayerPanel);
+		bottomMenuPanel.add(blackPlayer); //testing, time placement holder
+		controlSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topMenuPanel, bottomMenuPanel);
+		controlSplit.setOneTouchExpandable(true);
+		controlSplit.setDividerLocation(300);
+
+		gameSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gamePanel, controlSplit);
+		gameFrame.add(gameSplit);
+		gameFrame.setContentPane(gameSplit);
 		gameFrame.setLocationRelativeTo(null);
 		gameFrame.setResizable(true);
 		gameFrame.setVisible(true);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		}
 	}
 }
