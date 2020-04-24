@@ -91,6 +91,7 @@ public class App extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e){
 				restartFrame.dispose();
+				gameFrame.dispose();
 				chessGameGUI();
 				restartFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			}});
