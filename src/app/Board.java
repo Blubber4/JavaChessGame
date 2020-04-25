@@ -17,6 +17,18 @@ public class Board extends JComponent {
     public boolean blackTurn = true;
     // instance vars
 
+    public boolean getTurn() {
+        return blackTurn;
+    }
+
+    public boolean getwhiteTurn(){
+        /* if (blackTurn == false) {
+            return blackTurn == false;
+        }
+        */
+        return blackTurn == false;
+    }
+
     public Board() {
         // initialize a new board
         super();

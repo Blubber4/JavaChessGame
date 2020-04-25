@@ -182,9 +182,24 @@ public class App extends JPanel {
 		showPlayerPanel  = new JPanel();
 		topMenuPanel.setBackground(Color.YELLOW);
 		bottomMenuPanel.setBackground(Color.YELLOW);
-		showPlayerPanel.add(whitePlayer);//testing player placement
+		//showPlayerPanel.add(whitePlayer);//testing player placement
+		//showPlayerPanel.add(blackPlayer); //testing, time placement holder
+	
+		Board newboard = new Board();
+
+		if ( newboard.getTurn() == false ){
+			showPlayerPanel.add(whitePlayer);
+			showPlayerPanel.remove(blackPlayer);
+			showPlayerPanel.repaint();
+		}else{
+			showPlayerPanel.remove(whitePlayer);
+			showPlayerPanel.add(blackPlayer);
+			showPlayerPanel.repaint();
+
+		}
+
+
 		topMenuPanel.add(showPlayerPanel);
-		topMenuPanel.add(blackPlayer); //testing, time placement holder
 		controlSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topMenuPanel, bottomMenuPanel);
 		controlSplit.setOneTouchExpandable(true);
 		controlSplit.setDividerLocation(550);
