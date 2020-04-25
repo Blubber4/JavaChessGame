@@ -1,15 +1,12 @@
 package app;
 
 import javax.swing.*;
-import java.io.File;
-import java.sql.Time;
 import javax.swing.border.*;
 import javax.swing.plaf.DimensionUIResource;
 
-import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.Toolkit;
+
 
 
 /**
@@ -31,7 +28,7 @@ public class App extends JPanel {
 	private JButton startButton, cancelButton, restartButton, yesButton, noButton, popupButton;
 	private JSplitPane gameSplit, controlSplit;
 	private JLabel titleLabel, whitePlayer, blackPlayer, winnerLabel, losingLabel;
-	private Time timer;
+	//private Time timer;
 
 	// private ArrayList<Board> destinationlist = new ArrayList<Board>();
 
