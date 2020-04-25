@@ -2,6 +2,7 @@ package app;
 
 import javax.swing.*;
 import java.io.File;
+import java.sql.Time;
 import javax.swing.border.*;
 import javax.swing.plaf.DimensionUIResource;
 
@@ -43,13 +44,13 @@ public class App extends JPanel {
 		mainFrame = new JFrame("Chess Game");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(300,200);
-		mainFrame.setVisible(true);
+		//mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
 		mainFrame.setLocationRelativeTo(null);
 
 		titlePanel = new JPanel();
 		titleLabel = new JLabel("Welcome to Chess!");
-			titleLabel.setFont(new Font("SERIF", Font.BOLD, 30));
+		titleLabel.setFont(new Font("SERIF", Font.BOLD, 30));
 		titlePanel.setBorder(new LineBorder(Color.BLACK, 3));
 		titlePanel.setBackground(Color.YELLOW);
 		titlePanel.add(titleLabel);
@@ -63,7 +64,9 @@ public class App extends JPanel {
 		bottomMenuPanel.add(cancelButton);
 		startButton.addActionListener(new START());
 		cancelButton.addActionListener(new CANCEL());
-		mainFrame.add(bottomMenuPanel); 
+		mainFrame.add(bottomMenuPanel);
+		
+		mainFrame.setVisible(true);
 
 	}
 

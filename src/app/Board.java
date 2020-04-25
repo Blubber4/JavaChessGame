@@ -61,7 +61,7 @@ public class Board extends JComponent {
         for (int i = 0; i < 8; i++) {
             chessPiece = new Pawn(PieceColor.WHITE);
             chessPiece.setlocation(new Point(i, 1));
-            allPieces.add(chessPiece);
+            //allPieces.add(chessPiece);
         }
 
         chessPiece = new Rook(PieceColor.BLACK);
@@ -71,7 +71,7 @@ public class Board extends JComponent {
         chessPiece = new Rook(PieceColor.BLACK);
         chessPiece.setlocation(new Point(7, 7));
         allPieces.add(chessPiece);
-
+        
         chessPiece = new King(PieceColor.BLACK);
         chessPiece.setlocation(new Point(3, 7));
         allPieces.add(chessPiece);
@@ -99,7 +99,7 @@ public class Board extends JComponent {
         for (int i = 0; i < 8; i++) {
             chessPiece = new Pawn(PieceColor.BLACK);
             chessPiece.setlocation(new Point(i, 6));
-            allPieces.add(chessPiece);
+            //allPieces.add(chessPiece);
         }
     }
 
@@ -152,6 +152,8 @@ public class Board extends JComponent {
     }
 
     private void setPossibleMoves(ChessPiece p) {
+    	this.possibleMoves = p.generatePossibleMoves(this.allPieces);
+    	/*
     	if(p instanceof Pawn) {
     		setPossibleMovesPawn(p); // pawns are weird
     		return;
@@ -159,12 +161,7 @@ public class Board extends JComponent {
         // fills the possibleMoves array for the selected piece
     	ArrayList<Point> pMoves = p.possiblemoves;
     	Point pLoc = p.getlocation();
-    	for(Point move : pMoves) {
-    		Point attemptedMove = new Point(move.x + pLoc.x, move.y + pLoc.y);
-    		if(onBoard(attemptedMove)) {
-    			this.possibleMoves.add(attemptedMove);
-    		}
-    	}
+    	*/
     }
     
     private boolean onBoard(Point p) {

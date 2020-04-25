@@ -8,17 +8,25 @@ public class King extends ChessPiece {
         super("King.png", color);
     }
 
-    protected ArrayList<Point> generatePossibleMoves() {
+    public ArrayList<Point> generatePossibleMoves(ArrayList<ChessPiece> board) {
         ArrayList<Point> moves = new ArrayList<Point>();
-        moves.add(new Point(0, 1));
-        moves.add(new Point(1, 0));
-        moves.add(new Point(1, 1));
-        moves.add(new Point(0, -1));
-        moves.add(new Point(-1, 0));
-        moves.add(new Point(-1, -1));
-        moves.add(new Point(1, -1));
-        moves.add(new Point(-1, 1));
-        return moves;
+        Point loc = this.getlocation();
+        moves.add(new Point(loc.x, loc.y + 1));
+        moves.add(new Point(loc.x + 1, loc.y));
+        moves.add(new Point(loc.x + 1, loc.y + 1));
+        moves.add(new Point(loc.x, loc.y - 1));
+        moves.add(new Point(loc.x - 1, loc.y));
+        moves.add(new Point(loc.x - 1, loc.y - 1));
+        moves.add(new Point(loc.x + 1, loc.y - 1));
+        moves.add(new Point(loc.x - 1, loc.y + 1));
+        ArrayList<Point> movesOnBoard = new ArrayList<Point>();
+        for(Point p: moves) {
+        	ChessPiece tmp = this.getPiece(p, board);
+        	if(this.onBoard(p) && (tmp == null || tmp.getColor() != this.getColor())) {
+        		movesOnBoard.add(p);
+        	}
+        }
+        return movesOnBoard;
     }
 
     // Implement a function to check if king is under threat

@@ -39,7 +39,25 @@ abstract class ChessPiece implements Cloneable {
             filename = "White" + filename;
         }
         this.image = scaleImage(loadImage(filename), height, width);
-        this.possiblemoves = generatePossibleMoves();
+        //this.possiblemoves = generatePossibleMoves();
+    }
+    
+    protected ChessPiece getPiece(Point loc, ArrayList<ChessPiece> allPieces) // Function to access piece of a particular cell, return null if no piece
+    {
+        for (int i = 0; i < allPieces.size(); i++) {
+        	Point iLoc = allPieces.get(i).getlocation();
+            if (iLoc.x == loc.x && iLoc.y == loc.y) {
+                return allPieces.get(i);
+            }
+        }
+        return null;
+    }
+    
+    protected boolean onBoard(Point p) {
+    	if(p.x < 0 || p.y < 0 || p.x > 7|| p.y > 7) {
+    		return false;
+    	}
+    	return true;
     }
 
     public void setlocation(Point p) {
@@ -82,5 +100,5 @@ abstract class ChessPiece implements Cloneable {
         g.drawImage(this.image, getlocation().x * SCALE, getlocation().y * SCALE, null);
     }
 
-    protected abstract ArrayList<Point> generatePossibleMoves();
+    public abstract ArrayList<Point> generatePossibleMoves(ArrayList<ChessPiece> board);
 }
