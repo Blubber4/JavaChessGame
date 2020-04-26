@@ -73,7 +73,7 @@ public class Board extends JComponent {
         for (int i = 0; i < 8; i++) {
             chessPiece = new Pawn(PieceColor.WHITE);
             chessPiece.setlocation(new Point(i, 1));
-            //allPieces.add(chessPiece);
+            allPieces.add(chessPiece);
         }
 
         chessPiece = new Rook(PieceColor.BLACK);
@@ -111,7 +111,7 @@ public class Board extends JComponent {
         for (int i = 0; i < 8; i++) {
             chessPiece = new Pawn(PieceColor.BLACK);
             chessPiece.setlocation(new Point(i, 6));
-            //allPieces.add(chessPiece);
+            allPieces.add(chessPiece);
         }
     }
 
