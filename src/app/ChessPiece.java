@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Image;
 import java.awt.Toolkit;
+
 import java.util.ArrayList;
 
- /**
+/**
  * This is the ChessPiece Class. It is an abstract class from which all the
  * actual pieces are inherited. It defines all the function common to all the
  * pieces The move() function an abstract function that has to be overridden in
@@ -30,8 +31,7 @@ abstract class ChessPiece implements Cloneable {
         WHITE, BLACK
     }
 
-    public ChessPiece(String filename, PieceColor color)
-    {
+    public ChessPiece(String filename, PieceColor color) {
         setColor(color);
         if (color == PieceColor.BLACK) {
             filename = "Black" + filename;
@@ -39,25 +39,27 @@ abstract class ChessPiece implements Cloneable {
             filename = "White" + filename;
         }
         this.image = scaleImage(loadImage(filename), height, width);
-        //this.possiblemoves = generatePossibleMoves();
+        // this.possiblemoves = generatePossibleMoves();
     }
-    
-    protected ChessPiece getPiece(Point loc, ArrayList<ChessPiece> allPieces) // Function to access piece of a particular cell, return null if no piece
+
+    protected ChessPiece getPiece(Point loc, ArrayList<ChessPiece> allPieces) // Function to access piece of a
+                                                                              // particular cell, return null if no
+                                                                              // piece
     {
         for (int i = 0; i < allPieces.size(); i++) {
-        	Point iLoc = allPieces.get(i).getlocation();
+            Point iLoc = allPieces.get(i).getlocation();
             if (iLoc.x == loc.x && iLoc.y == loc.y) {
                 return allPieces.get(i);
             }
         }
         return null;
     }
-    
+
     protected boolean onBoard(Point p) {
-    	if(p.x < 0 || p.y < 0 || p.x > 7|| p.y > 7) {
-    		return false;
-    	}
-    	return true;
+        if (p.x < 0 || p.y < 0 || p.x > 7 || p.y > 7) {
+            return false;
+        }
+        return true;
     }
 
     public void setlocation(Point p) {
@@ -68,7 +70,7 @@ abstract class ChessPiece implements Cloneable {
     public void setColor(PieceColor color) {
         this.color = color;
     }
-    
+
     public Point getlocation() {
         return location;
     }

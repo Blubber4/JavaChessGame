@@ -1,19 +1,18 @@
 package app;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+/**
+ * The GamePanel class is the primary content pane for the chess game itself, and is where all chesspieces and board will be drawn to.
+ */
 
 public class GamePanel extends JPanel implements MouseListener {
     // cached references
@@ -55,12 +54,12 @@ public class GamePanel extends JPanel implements MouseListener {
         board.draw(g);
     }
 
-  // override of JPanel drawing
-  @Override
+    // override of JPanel drawing
+    @Override
     protected void paintComponent(Graphics g) {
-      super.paintComponent(g);
-      drawBoard(g);
-  }
+        super.paintComponent(g);
+        drawBoard(g);
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {

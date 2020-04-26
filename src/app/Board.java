@@ -2,7 +2,6 @@ package app;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -23,29 +22,31 @@ public class Board extends JComponent {
         return blackTurn;
     }
 
-    public boolean getwhiteTurn(){
-        /* if (blackTurn == false) {
-            return blackTurn == false;
-        }
-        */
+    public boolean getwhiteTurn() {
+        /*
+         * if (blackTurn == false) { return blackTurn == false; }
+         */
         return blackTurn == false;
     }
 
     public Board() {
         // initialize a new board
         super();
-        this.setSize(600, 600); // I don't think this is drawing right (It isnt't but please dont change it, it will ruin the Main GUI - Tony)
+        this.setSize(600, 600); // I don't think this is drawing right (It isnt't but please dont change it, it
+                                // will ruin the Main GUI - Tony)
     }
 
     public void createPieces() { // clears the board and creates pieces for a new game
         deselect();
-        
+        // delete all pieces currently on the board
+        allPieces.clear();
+
         ChessPiece chessPiece = new Rook(PieceColor.WHITE);
         chessPiece.setlocation(new Point(0, 0));
         allPieces.add(chessPiece);
 
         chessPiece = new Rook(PieceColor.WHITE);
-        chessPiece.setlocation(new Point(7,0));
+        chessPiece.setlocation(new Point(7, 0));
         allPieces.add(chessPiece);
 
         chessPiece = new King(PieceColor.WHITE);
@@ -85,7 +86,7 @@ public class Board extends JComponent {
         chessPiece = new Rook(PieceColor.BLACK);
         chessPiece.setlocation(new Point(7, 7));
         allPieces.add(chessPiece);
-        
+
         chessPiece = new King(PieceColor.BLACK);
         chessPiece.setlocation(new Point(3, 7));
         allPieces.add(chessPiece);
@@ -126,7 +127,7 @@ public class Board extends JComponent {
     {
         Point loc = new Point(x, y);
         for (int i = 0; i < allPieces.size(); i++) {
-        	Point iLoc = allPieces.get(i).getlocation();
+            Point iLoc = allPieces.get(i).getlocation();
             if (iLoc.x == loc.x && iLoc.y == loc.y) {
                 return allPieces.get(i);
             }
@@ -136,12 +137,12 @@ public class Board extends JComponent {
 
     public void select(int x, int y) // Function to mark a cell indicating it's selection
     {
-    	deselect();
-    	ChessPiece clicked = getpiece(x, y);
-    	if(clicked != null && (PieceColor.BLACK == clicked.getColor()) == blackTurn) {
-    		this.selected = clicked;
-    		this.setPossibleMoves(clicked);
-    	}
+        deselect();
+        ChessPiece clicked = getpiece(x, y);
+        if (clicked != null && (PieceColor.BLACK == clicked.getColor()) == blackTurn) {
+            this.selected = clicked;
+            this.setPossibleMoves(clicked);
+        }
     }
 
     public void deselect() // Function to delselect the cell
@@ -160,96 +161,90 @@ public class Board extends JComponent {
     {
         this.possibleMoves = new ArrayList<Point>();
     }
-    
+
     private void setPossibleMovesPawn(ChessPiece p) {
-    	
+
     }
 
     private void setPossibleMoves(ChessPiece p) {
-    	this.possibleMoves = p.generatePossibleMoves(this.allPieces);
-    	/*
-    	if(p instanceof Pawn) {
-    		setPossibleMovesPawn(p); // pawns are weird
-    		return;
-    	}
-        // fills the possibleMoves array for the selected piece
-    	ArrayList<Point> pMoves = p.possiblemoves;
-    	Point pLoc = p.getlocation();
-    	*/
+        this.possibleMoves = p.generatePossibleMoves(this.allPieces);
+        /*
+         * if(p instanceof Pawn) { setPossibleMovesPawn(p); // pawns are weird return; }
+         * // fills the possibleMoves array for the selected piece ArrayList<Point>
+         * pMoves = p.possiblemoves; Point pLoc = p.getlocation();
+         */
     }
-    
+
     private boolean onBoard(Point p) {
-    	if(p.x < 0 || p.y < 0 || p.x > 7|| p.y > 7) {
-    		return false;
-    	}
-    	return true;
+        if (p.x < 0 || p.y < 0 || p.x > 7 || p.y > 7) {
+            return false;
+        }
+        return true;
     }
-    
+
     private boolean isCheck(ChessPiece.PieceColor color) {
-    	Point locOfKing = new Point(); // king of color
-    	for(ChessPiece p: this.allPieces) {
-    		if(p instanceof King && p.getColor() == color) {
-    			locOfKing = p.getlocation();
-    			break;
-    		}
-    	}
-    	for(ChessPiece p: this.allPieces) {
-    		if(p.getColor() != color) {
-    			ArrayList<Point> possibleMoves = p.generatePossibleMoves(this.allPieces);
-    			for(Point j: possibleMoves) {
-    				if(j.x == locOfKing.x && j.y == locOfKing.y) {
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	return false;
+        Point locOfKing = new Point(); // king of color
+        for (ChessPiece p : this.allPieces) {
+            if (p instanceof King && p.getColor() == color) {
+                locOfKing = p.getlocation();
+                break;
+            }
+        }
+        for (ChessPiece p : this.allPieces) {
+            if (p.getColor() != color) {
+                ArrayList<Point> possibleMoves = p.generatePossibleMoves(this.allPieces);
+                for (Point j : possibleMoves) {
+                    if (j.x == locOfKing.x && j.y == locOfKing.y) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
-    
+
     private void moveSelected(Point p) {
-    	// move the selected piece to point p
-    	ChessPiece capture = getpiece(p.x, p.y);
-    	if(capture != null) {
-    		allPieces.remove(capture);
-    	}
-    	selected.setlocation(p);
-    	blackCheck = this.isCheck(PieceColor.BLACK);
-    	whiteCheck = this.isCheck(PieceColor.WHITE);
-    	deselect();
-    	this.blackTurn = !this.blackTurn;
+        // move the selected piece to point p
+        ChessPiece capture = getpiece(p.x, p.y);
+        if (capture != null) {
+            allPieces.remove(capture);
+        }
+        selected.setlocation(p);
+        blackCheck = this.isCheck(PieceColor.BLACK);
+        whiteCheck = this.isCheck(PieceColor.WHITE);
+        deselect();
+        this.blackTurn = !this.blackTurn;
     }
 
     public void mouseClicked(MouseEvent e) {
         Point p = e.getPoint();
         Point scaledP = new Point(p.x / 75, p.y / 75); // this is scaled to board position
-        if(selected == null) {
-        	select(scaledP.x, scaledP.y);
+        if (selected == null) {
+            select(scaledP.x, scaledP.y);
         }
         // if not selected and there is a piece there
-        	// select that piece
+        // select that piece
         else {
-        	if(possibleMoves.contains(scaledP)) {
-        		moveSelected(scaledP);
-        		deselect();
-        	} else {
-        		deselect();
-        	}
+            if (possibleMoves.contains(scaledP)) {
+                moveSelected(scaledP);
+                deselect();
+            } else {
+                deselect();
+            }
         }
         // if selected and scaledP is a possibleMove
-        	// move piece
+        // move piece
         // if selected and scaledP is not a possibleMove
-        	// deselect
+        // deselect
         this.callRepaint();
     }
-    
+
     private void callRepaint() {
-    	SwingUtilities.invokeLater(new Runnable()
-    	{
-    	    public void run()
-    	    {
-    	        repaint();
-    	    }
-    	}); 
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                repaint();
+            }
+        });
     }
 
     public void update() {
