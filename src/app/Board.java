@@ -15,6 +15,8 @@ public class Board extends JComponent {
     ChessPiece selected; // null if no piece is selected
 
     public boolean blackTurn = true;
+    public boolean blackCheck = false;
+    public boolean whiteCheck = false;
     // instance vars
 
     public boolean getTurn() {
@@ -183,6 +185,17 @@ public class Board extends JComponent {
     	return true;
     }
     
+    private boolean madeCheck() {
+    	ArrayList<Point> possibleMoves = this.selected.generatePossibleMoves(this.allPieces);
+    	for(Point p : possibleMoves) {
+    		ChessPiece tmp = this.getpiece(p.x, p.y);
+    		if(tmp != null && tmp instanceof King && tmp.getColor() != this.selected.getColor()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     private void moveSelected(Point p) {
     	// move the selected piece to point p
     	ChessPiece capture = getpiece(p.x, p.y);
@@ -190,6 +203,15 @@ public class Board extends JComponent {
     		allPieces.remove(capture);
     	}
     	selected.setlocation(p);
+    	if(this.madeCheck()) {
+    		if(selected.getColor() == PieceColor.BLACK) {
+    			whiteCheck = true;
+    		} else {
+    			blackCheck = true;
+    		}
+    	} else {
+    		// this needs some way to set black/whiteCheck to false
+    	}
     	deselect();
     	this.blackTurn = !this.blackTurn;
     }
