@@ -185,12 +185,22 @@ public class Board extends JComponent {
     	return true;
     }
     
-    private boolean madeCheck() {
-    	ArrayList<Point> possibleMoves = this.selected.generatePossibleMoves(this.allPieces);
-    	for(Point p : possibleMoves) {
-    		ChessPiece tmp = this.getpiece(p.x, p.y);
-    		if(tmp != null && tmp instanceof King && tmp.getColor() != this.selected.getColor()) {
-    			return true;
+    private boolean isCheck(ChessPiece.PieceColor color) {
+    	Point locOfKing = new Point(); // king of color
+    	for(ChessPiece p: this.allPieces) {
+    		if(p instanceof King && p.getColor() == color) {
+    			locOfKing = p.getlocation();
+    			break;
+    		}
+    	}
+    	for(ChessPiece p: this.allPieces) {
+    		if(p.getColor() != color) {
+    			ArrayList<Point> possibleMoves = p.generatePossibleMoves(this.allPieces);
+    			for(Point j: possibleMoves) {
+    				if(j.x == locOfKing.x && j.y == locOfKing.y) {
+    					return true;
+    				}
+    			}
     		}
     	}
     	return false;
@@ -203,15 +213,8 @@ public class Board extends JComponent {
     		allPieces.remove(capture);
     	}
     	selected.setlocation(p);
-    	if(this.madeCheck()) {
-    		if(selected.getColor() == PieceColor.BLACK) {
-    			whiteCheck = true;
-    		} else {
-    			blackCheck = true;
-    		}
-    	} else {
-    		// this needs some way to set black/whiteCheck to false
-    	}
+    	blackCheck = this.isCheck(PieceColor.BLACK);
+    	whiteCheck = this.isCheck(PieceColor.WHITE);
     	deselect();
     	this.blackTurn = !this.blackTurn;
     }
