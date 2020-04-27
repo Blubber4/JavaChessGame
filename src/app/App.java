@@ -6,20 +6,23 @@ import javax.swing.plaf.DimensionUIResource;
 
 import java.awt.*;
 import java.awt.event.*;
+<<<<<<< Updated upstream
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
+=======
+
+>>>>>>> Stashed changes
 
 /**
- * This is the Main Class of our project. All GUI Elements are declared,
- * initialized and used in this class itself. It is inherited from the JFrame
- * Class of Java's Swing Library.
+ * This is the Main Class of our project. 
  */
 
 public class App extends JPanel {
 	private static final long serialVersionUID = 1L;
+<<<<<<< Updated upstream
 
 	//config params for window
 	private final int HEIGHT = 800;
@@ -119,5 +122,9 @@ public class App extends JPanel {
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		}
+=======
+	public static void main(String[] args) {
+		this.GUI = new GUI();
+>>>>>>> Stashed changes
 	}
 }

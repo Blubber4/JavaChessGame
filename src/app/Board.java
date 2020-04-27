@@ -13,14 +13,25 @@ public class Board extends JComponent {
     ArrayList<ChessPiece> allPieces = new ArrayList<ChessPiece>(); // all chess pieces on the board
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
     ChessPiece selected; // null if no piece is selected
-
     public boolean blackTurn = true;
+<<<<<<< Updated upstream
+=======
+    public boolean blackCheck = false;
+    public boolean whiteCheck = false;
+    static String move;
+
+>>>>>>> Stashed changes
     // instance vars
 
     public Board() {
         // initialize a new board
         super();
+<<<<<<< Updated upstream
         this.setSize(600, 600); // I don't think this is drawing right
+=======
+        this.setSize(600, 600); // I don't think this is drawing right (It isnt't but please dont change it, it will ruin the Main GUI - Tony)
+        move = " white ";
+>>>>>>> Stashed changes
     }
 
     public void createPieces() { // clears the board and creates pieces for a new game
@@ -132,13 +143,23 @@ public class Board extends JComponent {
 
     public void select(int x, int y) // Function to mark a cell indicating it's selection
     {
-    	deselect();
+        deselect();
+        
     	ChessPiece clicked = getpiece(x, y);
     	if(clicked != null && (PieceColor.BLACK == clicked.getColor()) == blackTurn) {
     		this.selected = clicked;
-    		this.setPossibleMoves(clicked);
-    	}
+            this.setPossibleMoves(clicked);
+        }
     }
+    /*
+    public String isBlackTurn() {
+        if (blackTurn){
+            return "black";
+        } else {
+            return "white";
+        }
+    }
+    */
 
     public void deselect() // Function to delselect the cell
     {
@@ -192,7 +213,8 @@ public class Board extends JComponent {
     	}
     	selected.setlocation(p);
     	deselect();
-    	this.blackTurn = !this.blackTurn;
+        this.blackTurn = !this.blackTurn;
+
     }
 
     public void mouseClicked(MouseEvent e) {
