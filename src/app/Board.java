@@ -204,6 +204,19 @@ public class Board extends JComponent {
         return false;
     }
 
+    private void checkPawnPromotion() {
+        if (selected instanceof Pawn) {
+            Point loc = selected.getlocation();
+            int y_coord = loc.y;
+            if (y_coord == 0 || y_coord == 7) {
+                allPieces.remove(selected);
+                Queen queen = new Queen(selected.getColor());
+                queen.setlocation(loc);
+                allPieces.add(queen);
+            }
+        }
+    }
+
     private void moveSelected(Point p) {
         // move the selected piece to point p
         ChessPiece capture = getpiece(p.x, p.y);
@@ -211,6 +224,7 @@ public class Board extends JComponent {
             allPieces.remove(capture);
         }
         selected.setlocation(p);
+        checkPawnPromotion();
         blackCheck = this.isCheck(PieceColor.BLACK);
         whiteCheck = this.isCheck(PieceColor.WHITE);
         deselect();
@@ -246,9 +260,6 @@ public class Board extends JComponent {
                 repaint();
             }
         });
-    }
-
-    public void update() {
     }
 
     public void draw(Graphics g) {
