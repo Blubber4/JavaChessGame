@@ -18,7 +18,7 @@ public class Board extends JComponent {
     public boolean whiteCheck = false;
     // instance vars
 
-    public boolean getTurn() {
+    public boolean isBlackTurn() {
         return blackTurn;
     }
 

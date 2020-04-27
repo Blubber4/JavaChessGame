@@ -20,11 +20,11 @@ public class King extends ChessPiece {
         moves.add(new Point(loc.x + 1, loc.y - 1));
         moves.add(new Point(loc.x - 1, loc.y + 1));
         ArrayList<Point> movesOnBoard = new ArrayList<Point>();
-        for(Point p: moves) {
-        	ChessPiece tmp = this.getPiece(p, board);
-        	if(this.onBoard(p) && (tmp == null || tmp.getColor() != this.getColor())) {
-        		movesOnBoard.add(p);
-        	}
+        for (Point p : moves) {
+            ChessPiece tmp = this.getPiece(p, board);
+            if (this.onBoard(p) && (tmp == null || tmp.getColor() != this.getColor())) {
+                movesOnBoard.add(p);
+            }
         }
         return movesOnBoard;
     }
