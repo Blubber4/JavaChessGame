@@ -13,7 +13,7 @@ public class Board extends JComponent {
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
     ChessPiece selected; // null if no piece is selected
 
-    public boolean blackTurn = true;
+    public boolean blackTurn = false;
     public boolean blackCheck = false;
     public boolean whiteCheck = false;
     // instance vars
