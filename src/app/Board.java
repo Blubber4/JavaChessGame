@@ -14,29 +14,16 @@ public class Board extends JComponent {
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
     ChessPiece selected; // null if no piece is selected
     public boolean blackTurn = true;
-<<<<<<< Updated upstream
-=======
-    public boolean blackCheck = false;
-    public boolean whiteCheck = false;
-    static String move;
-
->>>>>>> Stashed changes
     // instance vars
 
     public Board() {
         // initialize a new board
         super();
-<<<<<<< Updated upstream
         this.setSize(600, 600); // I don't think this is drawing right
-=======
-        this.setSize(600, 600); // I don't think this is drawing right (It isnt't but please dont change it, it will ruin the Main GUI - Tony)
-        move = " white ";
->>>>>>> Stashed changes
     }
 
     public void createPieces() { // clears the board and creates pieces for a new game
         deselect();
-<<<<<<< HEAD
         
         ChessPiece chessPiece = new Rook(PieceColor.WHITE);
         chessPiece.setlocation(new Point(0, 0));
@@ -113,15 +100,6 @@ public class Board extends JComponent {
             chessPiece.setlocation(new Point(i, 6));
             allPieces.add(chessPiece);
         }
-=======
-        allPieces = new ArrayList<ChessPiece>();
-        Rook whiteRook = new Rook("WhiteRook", "WhiteRook.png", ChessPiece.PieceColor.WHITE);
-        whiteRook.setlocation(new Point(1, 0));
-        allPieces.add(whiteRook);
-        Rook blackRook = new Rook("BlackRook", "BlackRook.png", ChessPiece.PieceColor.BLACK);
-        blackRook.setlocation(new Point(1, 1));
-        allPieces.add(blackRook);
->>>>>>> master
     }
 
     public void setPiece(ChessPiece p) // add a piece to the board
