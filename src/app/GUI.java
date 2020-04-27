@@ -10,19 +10,22 @@ import java.awt.event.*;
 public class GUI extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    // config params for window
+    // config params
     private final int HEIGHT = 650;
     private final int WIDTH = 1000;
+    private final int REFRESH_RATE = 10;
 
     // cached references
     private JFrame manuMenuFrame, gameFrame;
-    private Board board;
+    private GamePanel gamePanel;
+    private JLabel currentTurn;
+    private Timer timer;
 
     public GUI() {
         initMainWindow();
         initMainMenu();
     }
-    
+
     // INITIALIZES MAIN CONTENT FRAME
     private void initMainWindow() {
         this.manuMenuFrame = new JFrame("Chess Game");
@@ -45,7 +48,6 @@ public class GUI extends JPanel {
         JLabel titleLabel = new JLabel("Welcome to Chess!");
         titleLabel.setFont(new Font("SERIF", Font.BOLD, 30));
         titlePanel.add(titleLabel);
-        
 
         // initialize bottom main menu panel
         JPanel bottomMenuPanel = new JPanel(new GridLayout(1, 2));
@@ -110,13 +112,8 @@ public class GUI extends JPanel {
         losingFrame.add(losingPanel);
     }
 
-    // placeholder, might or might not need this
-    private void gameOver() {
-
-    }
-
-    private void updateTurn() {
-
+    private void setTurn(String turn) {
+        this.currentTurn.setText(turn);
     }
 
     // function to initialize game, host all board properties and control panel subclasses
@@ -124,9 +121,6 @@ public class GUI extends JPanel {
         // initilize main chess game frame
         gameFrame = new JFrame("Chess Game");
         gameFrame.setSize(new DimensionUIResource(WIDTH, HEIGHT));
-
-        JLabel whitePlayer = new JLabel("White's Turn");
-        JLabel blackPlayer = new JLabel("Black's Turn");
 
         JButton restartButton = new JButton("Restart");
         restartButton.addActionListener(new RESTART());
@@ -141,22 +135,9 @@ public class GUI extends JPanel {
         bottomMenuPanel.setBackground(Color.YELLOW);
 
         JPanel showPlayerPanel = new JPanel();
-        
-        // showPlayerPanel.add(whitePlayer);//testing player placement
-        // showPlayerPanel.add(blackPlayer); //testing, time placement holder
-
-        this.board = new Board();
-
-        if (board.isBlackTurn() == false) {
-            showPlayerPanel.add(whitePlayer);
-            showPlayerPanel.remove(blackPlayer);
-            showPlayerPanel.repaint();
-        } else {
-            showPlayerPanel.remove(whitePlayer);
-            showPlayerPanel.add(blackPlayer);
-            showPlayerPanel.repaint();
-
-        }
+        this.currentTurn = new JLabel("White's turn");
+        currentTurn.setFont(new Font("Verdana",    1 , 20));
+        showPlayerPanel.add(currentTurn);
 
         topMenuPanel.add(showPlayerPanel);
         JSplitPane controlSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topMenuPanel, bottomMenuPanel);
@@ -166,7 +147,7 @@ public class GUI extends JPanel {
         bottomMenuPanel.add(restartButton);
         bottomMenuPanel.add(popupButton);
 
-        GamePanel gamePanel = new GamePanel();
+        this.gamePanel = new GamePanel();
         JSplitPane gameSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gamePanel, controlSplit);
         gameFrame.add(gameSplit);
         gameFrame.setContentPane(gameSplit);
@@ -174,6 +155,18 @@ public class GUI extends JPanel {
         gameFrame.setResizable(true);
         gameFrame.setVisible(true);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        // timer for updating player turn on GUI- 
+        timer = new Timer(REFRESH_RATE, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                if (gamePanel.getBoard().isBlackTurn()) {
+                    setTurn("Black's Turn");
+                } else {
+                    setTurn("White's Turn");
+                }
+            }
+        });
+        timer.start();
     }
 
     /* BUTTON ACTIONS BELOW */
