@@ -58,13 +58,13 @@ public class GUI extends JPanel {
         manuMenuFrame.add(bottomMenuPanel);
 
         // initialize bottom menu buttons
-        JButton cancelButton = new JButton("Exit");
-        cancelButton.addActionListener(new CANCEL());
-        bottomMenuPanel.add(cancelButton);
-
         JButton startButton = new JButton("New Game");
         startButton.addActionListener(new START());
         bottomMenuPanel.add(startButton);
+
+        JButton cancelButton = new JButton("Exit");
+        cancelButton.addActionListener(new CANCEL());
+        bottomMenuPanel.add(cancelButton);
 
         // make menu frame visible
         manuMenuFrame.setVisible(true);
