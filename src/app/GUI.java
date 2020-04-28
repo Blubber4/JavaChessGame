@@ -99,17 +99,44 @@ public class GUI extends JPanel {
         }
     }
 
-    private void showWinScreen() {
+    //winning a game notification
+    private void showWinnerScreen() {
         JFrame winningFrame = new JFrame("WINNER!");
         JPanel winningPanel = new JPanel();
+        JLabel winningLabel = new JLabel("CheckMate!");
+        winningPanel.add(winningLabel);
         winningFrame.add(winningPanel);
         winningPanel.setBackground(Color.GREEN);
+        winningFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        winningFrame.setLocationRelativeTo(null);
+        winningFrame.setVisible(true);
     }
-
-    private void showLossScreen() {
+    
+    //losing a game notification
+    private void showLoserScreen() {
         JFrame losingFrame = new JFrame("LOSER!");
         JPanel losingPanel = new JPanel();
+        JLabel losingLabel = new JLabel("Better luck next time!");
+        losingPanel.add(losingLabel);
         losingFrame.add(losingPanel);
+        losingPanel.setBackground(Color.WHITE);
+        losingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        losingFrame.setLocationRelativeTo(null);
+        losingFrame.setVisible(true);
+    }
+    
+    //notify player; king in check
+    private void kingCheck() {
+        JFrame checkFrame = new JFrame();
+        JPanel checkPanel = new JPanel();
+        JLabel kingCheckLabel = new JLabel("King is in Check!");
+        kingCheckLabel.setSize(20, 20); //you can delete this if u want
+        checkPanel.add(kingCheckLabel);
+        checkFrame.add(checkPanel);
+        checkPanel.setBackground(Color.RED);
+        checkFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        checkFrame.setLocationRelativeTo(null);
+        checkFrame.setVisible(true);
     }
 
     private void setTurn(String turn) {
