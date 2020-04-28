@@ -138,7 +138,7 @@ public class GUI extends JPanel {
         checkPanel.add(kingCheckLabel);
         checkFrame.add(checkPanel);
         checkPanel.setBackground(Color.RED);
-        checkFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        checkFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         checkFrame.setLocationRelativeTo(null);
         checkFrame.setVisible(true);
     }
