@@ -134,6 +134,7 @@ public class GUI extends JPanel {
         JPanel checkPanel = new JPanel();
         JLabel kingCheckLabel = new JLabel("King is in Check!");
         kingCheckLabel.setSize(20, 20); //you can delete this if u want
+        checkFrame.setSize(200, 100);
         checkPanel.add(kingCheckLabel);
         checkFrame.add(checkPanel);
         checkPanel.setBackground(Color.RED);
