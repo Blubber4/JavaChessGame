@@ -79,7 +79,7 @@ public class GUI extends JPanel {
 
             // init exit panel
             JPanel exitPanel = new JPanel();
-            exitPanel.setBackground(Color.RED);
+            exitPanel.setBackground(Color.WHITE);
             exitFrame.add(exitPanel);
 
             // init buttons and content
@@ -105,8 +105,9 @@ public class GUI extends JPanel {
     //winning a game notification
     private void showWinnerScreen() {
         JFrame winningFrame = new JFrame("WINNER!");
+        winningFrame.setSize(400, 200);
         JPanel winningPanel = new JPanel();
-        JLabel winningLabel = new JLabel("CheckMate!");
+        JLabel winningLabel = new JLabel("\n\nCheckMate!");
         winningPanel.add(winningLabel);
         winningFrame.add(winningPanel);
         winningPanel.setBackground(Color.GREEN);
@@ -130,17 +131,32 @@ public class GUI extends JPanel {
     
     //notify player; king in check
     private void kingCheck() {
+        check = false;
+
         JFrame checkFrame = new JFrame();
-        JPanel checkPanel = new JPanel();
-        JLabel kingCheckLabel = new JLabel("King is in Check!");
-        kingCheckLabel.setSize(20, 20); //you can delete this if u want
         checkFrame.setSize(200, 100);
-        checkPanel.add(kingCheckLabel);
-        checkFrame.add(checkPanel);
-        checkPanel.setBackground(Color.RED);
-        checkFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        checkFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         checkFrame.setLocationRelativeTo(null);
-        checkFrame.setVisible(true);
+        checkFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                checkFrame.dispose();
+            }
+        });
+
+        JPanel checkPanel = new JPanel();
+        checkPanel.setBackground(Color.WHITE);
+        checkFrame.add(checkPanel);
+
+        String color = "White";
+        if (board.isBlackTurn()) {
+            color = "Black";
+        }
+
+        JLabel kingCheckLabel = new JLabel(color + " king is in Check!");
+        kingCheckLabel.setSize(20, 20);
+        checkPanel.add(kingCheckLabel);
+
+        checkFrame.setVisible(true);      
     }
 
     private void setTurn(String turn) {
@@ -199,10 +215,13 @@ public class GUI extends JPanel {
 
                 if (board.check && check) {
                     kingCheck();
+                } else if (!board.check && !check) {
+                    check = !check;
                 }
 
                 if (board.winner != null) {
                     showWinnerScreen();
+                    timer.stop();
                 }
             }
         });
