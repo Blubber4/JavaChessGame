@@ -184,9 +184,9 @@ public class Board extends JComponent {
     private boolean isCheckmate() {
         PieceColor color;
         if (blackTurn) {
-            color = PieceColor.WHITE;
-        } else {
             color = PieceColor.BLACK;
+        } else {
+            color = PieceColor.WHITE;
         }
 
         for (ChessPiece p : this.allPieces) {
@@ -261,7 +261,6 @@ public class Board extends JComponent {
                 updatePossibleMoves();
                 if (isCheck(color)) {
                     deleted_moves.add(move);
-                    System.out.println("check");
                 }
                 piece.setlocation(loc);
                 if (capture != null) {
@@ -280,6 +279,10 @@ public class Board extends JComponent {
                 pair.moves.remove(0);
             }
             moves_to_delete.remove(0);
+        }
+
+        if (isCheck(color)) {
+            System.out.println("Check");
         }
     }
     
@@ -300,6 +303,8 @@ public class Board extends JComponent {
         deselect();
         newTurn();
         this.checkmate = isCheckmate();
+        if (checkmate)
+            System.out.println("checkmate");
     }
 
     public void mouseClicked(MouseEvent e) {
