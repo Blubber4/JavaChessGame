@@ -15,7 +15,9 @@ public class Board extends JComponent {
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
     ChessPiece selected; // null if no piece is selected
     boolean blackTurn = false;
+    boolean check = false;
     boolean checkmate = false;
+    PieceColor winner = null;
 
     public Board() {
         // initialize a new board
@@ -280,10 +282,8 @@ public class Board extends JComponent {
             }
             moves_to_delete.remove(0);
         }
-
-        if (isCheck(color)) {
-            System.out.println("Check");
-        }
+        
+        this.check = isCheck(color);
     }
     
     private ChessPiece capture(Point p) {
@@ -295,6 +295,14 @@ public class Board extends JComponent {
         return null;
     }
 
+    private void declareWinner() {
+        if (blackTurn) {
+            this.winner = PieceColor.WHITE;
+        } else {
+            this.winner = PieceColor.BLACK;
+        }
+    }
+
     private void moveSelected(Point p) {
         // move the selected piece to point p
         capture(p);
@@ -302,9 +310,9 @@ public class Board extends JComponent {
         checkPawnPromotion();
         deselect();
         newTurn();
-        this.checkmate = isCheckmate();
-        if (checkmate)
-            System.out.println("checkmate");
+        if (isCheckmate()) {
+            declareWinner();
+        }
     }
 
     public void mouseClicked(MouseEvent e) {

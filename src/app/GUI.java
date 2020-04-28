@@ -18,8 +18,11 @@ public class GUI extends JPanel {
     // cached references
     private JFrame manuMenuFrame, gameFrame;
     private GamePanel gamePanel;
+    private Board board;
     private JLabel currentTurn;
     private Timer timer;
+
+    private boolean check = true;
 
     public GUI() {
         initMainWindow();
@@ -175,6 +178,7 @@ public class GUI extends JPanel {
         bottomMenuPanel.add(popupButton);
 
         this.gamePanel = new GamePanel();
+        this.board = gamePanel.getBoard();
         JSplitPane gameSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gamePanel, controlSplit);
         gameFrame.add(gameSplit);
         gameFrame.setContentPane(gameSplit);
@@ -186,10 +190,18 @@ public class GUI extends JPanel {
         // timer for updating player turn on GUI- 
         timer = new Timer(REFRESH_RATE, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                if (gamePanel.getBoard().isBlackTurn()) {
+                if (board.isBlackTurn()) {
                     setTurn("Black's Turn");
                 } else {
                     setTurn("White's Turn");
+                }
+
+                if (board.check && check) {
+                    kingCheck();
+                }
+
+                if (board.winner != null) {
+                    showWinnerScreen();
                 }
             }
         });
