@@ -1,12 +1,5 @@
 package app;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.plaf.DimensionUIResource;
-
-import java.awt.*;
-import java.awt.event.*;
-
 /**
  * This is the Main Class of our project. All GUI Elements are declared,
  * initialized and used in this class itself. It is inherited from the JFrame

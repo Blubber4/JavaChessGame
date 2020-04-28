@@ -15,6 +15,8 @@ import java.awt.event.MouseListener;
  */
 
 public class GamePanel extends JPanel implements MouseListener {
+    private static final long serialVersionUID = 1L;
+
     // cached references
     private Timer timer;
     private Board board;

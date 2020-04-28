@@ -79,6 +79,7 @@ public class Bishop extends ChessPiece {
                 movesOnBoard.add(p);
             }
         }
+        this.possiblemoves = movesOnBoard;
         return movesOnBoard;
     }
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * all the inherited class
  */
 
-abstract class ChessPiece implements Cloneable {
+abstract class ChessPiece {
 
     // Member Variables
     private Point location;
@@ -43,8 +43,7 @@ abstract class ChessPiece implements Cloneable {
     }
 
     protected ChessPiece getPiece(Point loc, ArrayList<ChessPiece> allPieces) // Function to access piece of a
-                                                                              // particular cell, return null if no
-                                                                              // piece
+                                                                              // particular cell, return null if no piece
     {
         for (int i = 0; i < allPieces.size(); i++) {
             Point iLoc = allPieces.get(i).getlocation();
@@ -80,10 +79,13 @@ abstract class ChessPiece implements Cloneable {
         return this.color;
     }
 
-    // Function to return the a "shallow" copy of the object. The copy has exact
-    // same variable value but different reference
-    public ChessPiece getcopy() throws CloneNotSupportedException {
-        return (ChessPiece) this.clone();
+    // possible moves must first be populated by generatePossibleMoves() method
+    public ArrayList<Point> getPossibleMoves() {
+        return this.possiblemoves;
+    }
+
+    public void deleteMove(Point p) {
+        possiblemoves.remove(p);
     }
 
     /* loads image with filename in the project's resources folder */

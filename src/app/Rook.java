@@ -75,6 +75,7 @@ public class Rook extends ChessPiece {
                 movesOnBoard.add(p);
             }
         }
+        this.possiblemoves = movesOnBoard;
         return movesOnBoard;
     }
 }

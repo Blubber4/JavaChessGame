@@ -9,25 +9,13 @@ import javax.swing.*;
 import app.ChessPiece.PieceColor;
 
 public class Board extends JComponent {
+    private static final long serialVersionUID = 1L;
+
     ArrayList<ChessPiece> allPieces = new ArrayList<ChessPiece>(); // all chess pieces on the board
     ArrayList<Point> possibleMoves = new ArrayList<Point>(); // possible moves to be highlighted
     ChessPiece selected; // null if no piece is selected
-
-    public boolean blackTurn = false;
-    public boolean blackCheck = false;
-    public boolean whiteCheck = false;
-    // instance vars
-
-    public boolean isBlackTurn() {
-        return blackTurn;
-    }
-
-    public boolean getwhiteTurn() {
-        /*
-         * if (blackTurn == false) { return blackTurn == false; }
-         */
-        return blackTurn == false;
-    }
+    boolean blackTurn = false;
+    boolean checkmate = false;
 
     public Board() {
         // initialize a new board
@@ -117,11 +105,10 @@ public class Board extends JComponent {
             chessPiece.setlocation(new Point(i, 6));
             allPieces.add(chessPiece);
         }
-    }
 
-    public void setPiece(ChessPiece p) // add a piece to the board
-    {
-        allPieces.add(p);
+        for (ChessPiece t : allPieces) {
+            t.generatePossibleMoves(this.allPieces);
+        }
     }
 
     public ChessPiece getpiece(int x, int y) // Function to access piece of a particular cell, return null if no piece
@@ -152,23 +139,17 @@ public class Board extends JComponent {
         this.selected = null;
     }
 
-    public void setpossibledestination(int x, int y) // Function to highlight a cell to indicate that it is a possible
-                                                     // valid move
-    {
-        this.possibleMoves.add(new Point(x, y));
-    }
-
     public void removepossibledestination() // clear the possible destinations
     {
         this.possibleMoves = new ArrayList<Point>();
     }
 
-    private void setPossibleMovesPawn(ChessPiece p) {
-
+    public boolean isBlackTurn() {
+        return blackTurn;
     }
 
     private void setPossibleMoves(ChessPiece p) {
-        this.possibleMoves = p.generatePossibleMoves(this.allPieces);
+        this.possibleMoves = p.getPossibleMoves();
         /*
          * if(p instanceof Pawn) { setPossibleMovesPawn(p); // pawns are weird return; }
          * // fills the possibleMoves array for the selected piece ArrayList<Point>
@@ -176,24 +157,20 @@ public class Board extends JComponent {
          */
     }
 
-    private boolean onBoard(Point p) {
-        if (p.x < 0 || p.y < 0 || p.x > 7 || p.y > 7) {
-            return false;
-        }
-        return true;
-    }
+    
 
     private boolean isCheck(ChessPiece.PieceColor color) {
-        Point locOfKing = new Point(); // king of color
+        Point locOfKing = new Point();
         for (ChessPiece p : this.allPieces) {
             if (p instanceof King && p.getColor() == color) {
                 locOfKing = p.getlocation();
                 break;
             }
         }
+
         for (ChessPiece p : this.allPieces) {
             if (p.getColor() != color) {
-                ArrayList<Point> possibleMoves = p.generatePossibleMoves(this.allPieces);
+                ArrayList<Point> possibleMoves = p.getPossibleMoves();
                 for (Point j : possibleMoves) {
                     if (j.x == locOfKing.x && j.y == locOfKing.y) {
                         return true;
@@ -202,6 +179,25 @@ public class Board extends JComponent {
             }
         }
         return false;
+    }
+    
+    private boolean isCheckmate() {
+        PieceColor color;
+        if (blackTurn) {
+            color = PieceColor.WHITE;
+        } else {
+            color = PieceColor.BLACK;
+        }
+
+        for (ChessPiece p : this.allPieces) {
+            if (p.getColor() != color) {
+                continue;
+            }
+            if (!p.getPossibleMoves().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void checkPawnPromotion() {
@@ -217,6 +213,49 @@ public class Board extends JComponent {
         }
     }
 
+    /**
+     * updates possible moves for all pieces on the board, removing those moves that
+     * would put the player in check. If all possible moves are empty after this
+     * function, then it is checkmate
+     */
+
+    private void updatePossibleMoves() {
+        for (ChessPiece piece : this.allPieces) {
+            piece.generatePossibleMoves(this.allPieces);
+        }
+    }
+
+    private void newTurn() {
+        this.blackTurn = !this.blackTurn;
+        updatePossibleMoves();
+
+        PieceColor color;
+        if (blackTurn) {
+            color = PieceColor.BLACK;
+        } else {
+            color = PieceColor.WHITE;
+        }
+        
+        for (int i = 0; i < this.allPieces.size(); i++) {
+            ChessPiece piece = allPieces.get(i);
+            if (piece.getColor() != color) {
+                continue;
+            }
+
+            ArrayList<Point> moves = piece.getPossibleMoves();
+            for (int j = 0; j < moves.size(); j++) {
+                Point loc = piece.getlocation();
+                Point move = moves.get(j);
+                piece.setlocation(move);
+                if (isCheck(color)) {
+                    piece.deleteMove(move);
+                    System.out.println("check");
+                }
+                piece.setlocation(loc);
+            }
+        }
+    }
+
     private void moveSelected(Point p) {
         // move the selected piece to point p
         ChessPiece capture = getpiece(p.x, p.y);
@@ -225,10 +264,9 @@ public class Board extends JComponent {
         }
         selected.setlocation(p);
         checkPawnPromotion();
-        blackCheck = this.isCheck(PieceColor.BLACK);
-        whiteCheck = this.isCheck(PieceColor.WHITE);
         deselect();
-        this.blackTurn = !this.blackTurn;
+        newTurn();
+        this.checkmate = isCheckmate();
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -251,15 +289,6 @@ public class Board extends JComponent {
         // move piece
         // if selected and scaledP is not a possibleMove
         // deselect
-        this.callRepaint();
-    }
-
-    private void callRepaint() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                repaint();
-            }
-        });
     }
 
     public void draw(Graphics g) {
