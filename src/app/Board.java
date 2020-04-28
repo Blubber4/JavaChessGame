@@ -227,7 +227,6 @@ public class Board extends JComponent {
 
     private void newTurn() {
         this.blackTurn = !this.blackTurn;
-        updatePossibleMoves();
 
         PieceColor color;
         if (blackTurn) {
@@ -235,33 +234,67 @@ public class Board extends JComponent {
         } else {
             color = PieceColor.WHITE;
         }
-        
+
+        final class Pair {
+            ChessPiece piece;
+            ArrayList<Point> moves;
+
+            Pair(ChessPiece piece, ArrayList<Point> moves) {
+                this.piece = piece;
+                this.moves = moves;
+            }
+        }
+
+        updatePossibleMoves();
+        ArrayList<Pair> moves_to_delete = new ArrayList<Pair>();
         for (int i = 0; i < this.allPieces.size(); i++) {
             ChessPiece piece = allPieces.get(i);
             if (piece.getColor() != color) {
                 continue;
             }
 
-            ArrayList<Point> moves = piece.getPossibleMoves();
-            for (int j = 0; j < moves.size(); j++) {
+            ArrayList<Point> deleted_moves = new ArrayList<Point>();
+            for (Point move : piece.getPossibleMoves()) {
                 Point loc = piece.getlocation();
-                Point move = moves.get(j);
+                ChessPiece capture = capture(move);
                 piece.setlocation(move);
+                updatePossibleMoves();
                 if (isCheck(color)) {
-                    piece.deleteMove(move);
+                    deleted_moves.add(move);
                     System.out.println("check");
                 }
                 piece.setlocation(loc);
+                if (capture != null) {
+                    allPieces.add(capture);
+                }
+                updatePossibleMoves();
             }
+            moves_to_delete.add(new Pair(piece, deleted_moves));
         }
+
+        while (moves_to_delete.size() > 0) {
+            Pair pair = moves_to_delete.get(0);
+            while (pair.moves.size() > 0) {
+                Point move = pair.moves.get(0);
+                pair.piece.deleteMove(move);
+                pair.moves.remove(0);
+            }
+            moves_to_delete.remove(0);
+        }
+    }
+    
+    private ChessPiece capture(Point p) {
+        ChessPiece capture = getpiece(p.x, p.y);
+        if (capture != null) {
+            allPieces.remove(capture);
+            return capture;
+        }
+        return null;
     }
 
     private void moveSelected(Point p) {
         // move the selected piece to point p
-        ChessPiece capture = getpiece(p.x, p.y);
-        if (capture != null) {
-            allPieces.remove(capture);
-        }
+        capture(p);
         selected.setlocation(p);
         checkPawnPromotion();
         deselect();
